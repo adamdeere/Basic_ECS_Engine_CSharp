@@ -25,7 +25,7 @@ namespace OpenGL_Game
             : base(800, // Width
                 600, // Height
                 GraphicsMode.Default,
-                "Lab 1 Hello, Triangle",
+                "Component based tower",
                 GameWindowFlags.Default,
                 DisplayDevice.Default,
                 3, // major
