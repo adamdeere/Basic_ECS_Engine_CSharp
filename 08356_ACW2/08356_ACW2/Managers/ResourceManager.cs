@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
 using System.Drawing;
 using System.Drawing.Imaging;
 using OpenTK.Graphics.OpenGL;
 using OpenGL_Game.Objects;
-
 
 namespace OpenGL_Game.Managers
 {
@@ -16,24 +12,26 @@ namespace OpenGL_Game.Managers
         static Dictionary<string, Geometry> geometryDictionary = new Dictionary<string, Geometry>();
         static Dictionary<string, int> textureDictionary = new Dictionary<string, int>();
 
-        public static Geometry LoadGeometry(string filename)
-        {
-            Geometry geometry;
-            geometryDictionary.TryGetValue(filename, out geometry);
-            if (geometry == null)
-            {
-                geometry = new Geometry();
-                geometry.LoadObject(filename);
-                geometryDictionary.Add(filename, geometry);
-            }
+      
 
-            return geometry;
-        }
+        //public static Geometry LoadGeometry(string filename)
+        //{
+        //    Geometry geometry;
+        //    geometryDictionary.TryGetValue(filename, out geometry);
+        //    if (geometry == null)
+        //    {
+        //        geometry = new Geometry();
+        //        geometry.LoadObject(filename);
+        //        geometryDictionary.Add(filename, geometry);
+        //    }
+
+        //    return geometry;
+        //}
 
       
         public static int LoadTexture(string filename)
         {
-            if (String.IsNullOrEmpty(filename))
+            if (string.IsNullOrEmpty(filename))
                 throw new ArgumentException(filename);
 
             int texture;

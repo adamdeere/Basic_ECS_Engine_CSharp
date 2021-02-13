@@ -68,7 +68,7 @@ namespace OpenGL_Game.Systems
                 {
                     return component.ComponentType == ComponentTypes.COMPONENT_GEOMETRY;
                 });
-                Geometry geometry = ((ComponentGeometry)geometryComponent).Geometry();
+                Geometry[] geometry = ((ComponentGeometry)geometryComponent).Geometry();
 
                 IComponent positionComponent = components.Find(delegate(IComponent component)
                 {
@@ -82,8 +82,11 @@ namespace OpenGL_Game.Systems
                     return component.ComponentType == ComponentTypes.COMPONENT_TEXTURE;
                 });
                 int texture = ((ComponentTexture)textureComponent).Texture;
+                for (int i = 0; i < geometry.Length; i++)
+                {
+                     Draw(world, geometry[i], texture);
+                }
 
-                Draw(world, geometry, texture);
             }
         }
 

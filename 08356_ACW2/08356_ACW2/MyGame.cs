@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
@@ -7,6 +6,7 @@ using OpenGL_Game.Components;
 using OpenGL_Game.Systems;
 using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
+using OpenTK.Graphics;
 
 namespace OpenGL_Game
 {
@@ -21,11 +21,21 @@ namespace OpenGL_Game
 
         public static MyGame gameInstance;
 
-        public MyGame() : base()
+        public MyGame() 
+            : base(800, // Width
+                600, // Height
+                GraphicsMode.Default,
+                "Lab 1 Hello, Triangle",
+                GameWindowFlags.Default,
+                DisplayDevice.Default,
+                3, // major
+                3, // minor
+                GraphicsContextFlags.ForwardCompatible)
         {
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
+         
         }
 
         private void CreateEntities()
@@ -33,16 +43,16 @@ namespace OpenGL_Game
             Entity newEntity;
 
             newEntity = new Entity("Triangle1");
-            newEntity.AddComponent(new ComponentPosition(-1.0f, 0.0f, -3.0f));
-            newEntity.AddComponent(new ComponentGeometry("Geometry/TriangleGeometry.txt"));
+            newEntity.AddComponent(new ComponentPosition(-2.0f, -1.0f, -4.0f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/CubeSphere.fbx"));
             newEntity.AddComponent(new ComponentTexture("Textures/spaceship.png"));
             entityManager.AddEntity(newEntity);
 
             newEntity = new Entity("Square1");
-            newEntity.AddComponent(new ComponentPosition(+1.0f, 0.0f, -3.0f));
-            newEntity.AddComponent(new ComponentGeometry("Geometry/SquareGeometry.txt"));
+            newEntity.AddComponent(new ComponentPosition(2.0f, 0.0f, -3.0f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Cube.fbx"));
             newEntity.AddComponent(new ComponentTexture("Textures/spaceship.png"));
-            entityManager.AddEntity(newEntity);
+           // entityManager.AddEntity(newEntity);
             float g = (Vector3.Dot(new Vector3(1,2,3), new Vector3(1,1,1) * new Vector3(2,2,2)));
             Vector3 t = new Vector3(1, 2, 3);
             float a = t.Length;
