@@ -7,6 +7,8 @@ using OpenGL_Game.Systems;
 using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
 using OpenTK.Graphics;
+using System.IO;
+using System.Collections.Generic;
 
 namespace OpenGL_Game
 {
@@ -42,13 +44,19 @@ namespace OpenGL_Game
         {
             Entity newEntity;
 
-            newEntity = new Entity("Triangle1");
+            newEntity = new Entity("tower");
             newEntity.AddComponent(new ComponentPosition(-2.0f, -1.0f, -4.0f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/CubeSphere.fbx"));
             newEntity.AddComponent(new ComponentTexture("Textures/spaceship.png"));
             entityManager.AddEntity(newEntity);
 
-            newEntity = new Entity("Square1");
+            newEntity = new Entity("cylinder");
+            newEntity.AddComponent(new ComponentPosition(-2.0f, -1.0f, -4.0f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/CubeSphere.fbx"));
+            newEntity.AddComponent(new ComponentTexture("Textures/spaceship.png"));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("sphere");
             newEntity.AddComponent(new ComponentPosition(2.0f, 0.0f, -3.0f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Cube.fbx"));
             newEntity.AddComponent(new ComponentTexture("Textures/spaceship.png"));
@@ -67,6 +75,36 @@ namespace OpenGL_Game
             systemManager.AddSystem(newSystem);
         }
 
+        private void LoadModels()
+        {
+            //reads all of the models in from a file and pops them into a list with a tag so that they can be found and used by whichever object needs it
+            using (StreamReader modelSR = new StreamReader("Geometry/ModelList.txt"))
+            {
+                List<string> fileList = new List<string>();
+                while (modelSR.Peek() > -1)
+                {
+
+                    string line = modelSR.ReadLine();
+                    string[] result = line.Split(new string[] { "\n", "\r\n", "," }, StringSplitOptions.RemoveEmptyEntries);
+                    fileList.Add(result[0]);
+                }
+            }
+        }
+        private void LoadTextures()
+        {
+            using (StreamReader textureSR = new StreamReader(@"Utility/Models/modelFile.txt"))
+            {
+                List<string> fileList = new List<string>();
+                while (textureSR.Peek() > -1)
+                {
+
+                    string line = textureSR.ReadLine();
+                    string[] result = line.Split(new string[] { "\n", "\r\n", "," }, StringSplitOptions.RemoveEmptyEntries);
+                    fileList.Add(result[0]);
+                }
+            }
+        }
+
         /// <summary>
         /// Allows the game to setup the environment and matrices.
         /// </summary>
@@ -76,7 +114,8 @@ namespace OpenGL_Game
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             view = Matrix4.LookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
             projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 800f / 480f, 0.01f, 100f);
-
+            LoadModels();
+            LoadTextures();
             CreateEntities();
             CreateSystems();
 

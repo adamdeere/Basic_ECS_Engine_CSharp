@@ -1,0 +1,6 @@
+﻿sphere, SmallSphere.fbx
+sphere, BigSphere.fbx
+sphere, DoomSphere.fbx
+tower, Tower.fbx
+cylinder, SmallCylinder.fbx
+cylinder BigCylinder.fbx
