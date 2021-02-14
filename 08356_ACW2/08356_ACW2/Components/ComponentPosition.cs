@@ -28,7 +28,7 @@ namespace OpenGL_Game.Components
 
         public ComponentTypes ComponentType
         {
-            get { return ComponentTypes.COMPONENT_POSITION; }
+            get { return ComponentTypes.COMPONENT_TRANSFORM; }
         }
     }
 }
