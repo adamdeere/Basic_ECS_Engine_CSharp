@@ -1,0 +1,6 @@
+﻿scene,Scene_Colour.png
+scene,Scene_Height.png
+scene,Scene_Metalic.png
+scene,Scene_Normal.png
+scene,Scene_Roughness.png
+beermat,Scene_Roughness.png

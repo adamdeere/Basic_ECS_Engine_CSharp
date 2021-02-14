@@ -1,36 +1,17 @@
-﻿using Assimp;
-using OpenGL_Game.Managers;
-using OpenGL_Game.Objects;
-using System.Collections.Generic;
+﻿using OpenGL_Game.Objects;
 
 namespace OpenGL_Game.Components
 {
     class ComponentGeometry : IComponent
     {
-        Geometry[] geometry;
+        private Geometry[] geometry;
+        private ModelObject m_ModelObject;
 
-        public ComponentGeometry(string geometryName)
+        public ComponentGeometry(ModelObject geometryObject)
         {
-            Scene model;
-            AssimpContext importer = new AssimpContext();
-            importer.SetConfig(new Assimp.Configs.NormalSmoothingAngleConfig(66.0f));
-            model = importer.ImportFile(geometryName, PostProcessPreset.TargetRealTimeMaximumQuality);
-            geometry = new Geometry[model.MeshCount];
-            int count = 0;
-            foreach (var item in model.Meshes)
-            {
-                List<Vector3D[]> vertList = new List<Vector3D[]>
-                    {
-                        item.Vertices.ToArray(),
-                        item.TextureCoordinateChannels[0].ToArray(),
-                        item.Normals.ToArray(),
-                        item.BiTangents.ToArray(),
-                        item.Tangents.ToArray()
-                    };
-                geometry[count] = new Geometry(vertList, item.GetIndices(), item.VertexCount);
-                count++;
-
-            }
+            m_ModelObject = geometryObject;
+            geometry = m_ModelObject.GetGeometry;
+           
         }
 
         public ComponentTypes ComponentType
