@@ -59,10 +59,10 @@ namespace OpenGL_Game.Objects
                 }
 
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, vbo_verts[1]);
-                GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(indices.Length * sizeof(uint)),
+                GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(indices.Length * sizeof(int)),
                 indices, BufferUsageHint.StaticDraw);
                 GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out size);
-                if (indices.Length * sizeof(uint) != size)
+                if (indices.Length * sizeof(int) != size)
                 {
                     throw new ApplicationException("Index data not loaded onto graphics card correctly");
                 }
@@ -96,69 +96,10 @@ namespace OpenGL_Game.Objects
                 Console.WriteLine(e.ToString());
             }
         }
-        
-        /// <summary>
-        /// i think this method is now deprecated 
-        /// </summary>
-        /// <param name="filename"></param>
-        //public void LoadObject(string filename)
-        //{
-        //    string line;
-
-        //    try
-        //    {
-        //        FileStream fin = File.OpenRead(filename);
-        //        StreamReader sr = new StreamReader(fin);
-
-        //        GL.GenVertexArrays(1, out vao_Handle);
-        //        GL.BindVertexArray(vao_Handle);
-        //        //GL.GenBuffers(1, out vbo_verts);
-
-        //        while (!sr.EndOfStream)
-        //        {
-        //            line = sr.ReadLine();
-        //            string[] values = line.Split(',');
-
-        //            if (values[0].StartsWith("NUM_OF_TRIANGLES"))
-        //            {
-        //                numberOfTriangles = int.Parse(values[0].Remove(0, "NUM_OF_TRIANGLES".Length));
-        //                continue;
-        //            }
-        //            if (values[0].StartsWith("//") || values.Length < 5) continue;
-
-        //            //verts
-        //            vertices.Add(float.Parse(values[0]));
-        //            vertices.Add(float.Parse(values[1]));
-        //            vertices.Add(float.Parse(values[2]));
-        //            //tex coords
-        //            vertices.Add(float.Parse(values[3]));
-        //            vertices.Add(float.Parse(values[4]));
-        //            //normals
-
-        //            //bitangents
-
-        //            //tangents
-        //        }
-
-        //        GL.BindBuffer(BufferTarget.ArrayBuffer, vbo_verts);
-        //        GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(vertices.Count * 4), vertices.ToArray<float>(), BufferUsageHint.StaticDraw);
-
-        //        // Positions
-        //        GL.EnableVertexAttribArray(0);
-        //        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 5*4, 0);
-
-        //        // Tex Coords
-        //        GL.EnableVertexAttribArray(1);
-        //        GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 5*4, 3*4);
-
-        //        GL.BindVertexArray(0);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.ToString());
-        //    }
-        //}
-
+        public void DeleteGeometry()
+        {
+            GL.DeleteBuffers(vbo_verts.Length, vbo_verts);
+        }
         public void Render()
         {
 

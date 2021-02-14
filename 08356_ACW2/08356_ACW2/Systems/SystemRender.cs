@@ -28,10 +28,11 @@ namespace OpenGL_Game.Systems
         public SystemRender()
         {
             pgmID = GL.CreateProgram();
-            LoadShader("Shaders/vs.glsl", ShaderType.VertexShader, pgmID, out vsID);
-            LoadShader("Shaders/fs.glsl", ShaderType.FragmentShader, pgmID, out fsID);
+            LoadShader("Shaders/vs.vert", ShaderType.VertexShader, pgmID, out vsID);
+            LoadShader("Shaders/fs.frag", ShaderType.FragmentShader, pgmID, out fsID);
+
+
             GL.LinkProgram(pgmID);
-            Console.WriteLine(GL.GetProgramInfoLog(pgmID));
 
             attribute_vpos = GL.GetAttribLocation(pgmID, "a_Position");
             attribute_vtex = GL.GetAttribLocation(pgmID, "a_TexCoord");
@@ -63,8 +64,13 @@ namespace OpenGL_Game.Systems
                 GL.ShaderSource(address, sr.ReadToEnd());
             }
             GL.CompileShader(address);
+            GL.GetShader(address, ShaderParameter.CompileStatus, out int result);
+            if (result == 0)
+            {
+                throw new Exception("Failed to compile shader!" + GL.GetShaderInfoLog(address));
+            }
             GL.AttachShader(program, address);
-            Console.WriteLine(GL.GetShaderInfoLog(address));
+         
         }
 
         public string Name
@@ -118,7 +124,7 @@ namespace OpenGL_Game.Systems
         public void Draw(Matrix4 world, Geometry geometry, ComponentMaterial mat)
         {
             GL.UseProgram(pgmID);
-            GL.CullFace(CullFaceMode.Front);
+           // GL.CullFace(CullFaceMode.Front);
             GL.Uniform1(uniform_stex, 0);
             mat.SetActiveTextues();
 
@@ -129,6 +135,15 @@ namespace OpenGL_Game.Systems
 
             GL.BindVertexArray(0);
             GL.UseProgram(0);
+        }
+
+        public void OnDelete()
+        {
+            GL.DetachShader(pgmID, vsID);
+            GL.DetachShader(pgmID, fsID);
+            GL.DeleteShader(vsID);
+            GL.DeleteShader(fsID);
+            GL.DeleteProgram(pgmID);
         }
     }
 }

@@ -178,14 +178,31 @@ namespace OpenGL_Game
             GL.Enable(EnableCap.CullFace);
             view = Matrix4.LookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
             projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 800f / 480f, 0.01f, 100f);
+
+            CreateSystems();
             LoadModels();
             LoadTextures();
             CreateEntities();
-            CreateSystems();
+         
 
             // TODO: Add your initialization logic here
         }
-
+        protected override void OnUnload(EventArgs e)
+        {
+            base.OnUnload(e);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+            GL.BindVertexArray(0);
+            for (int i = 0; i < modelObjectList.Count; i++)
+            {
+                modelObjectList[i].DeleteBuffere();
+            }
+            for (int i = 0; i < textureObjectList.Count; i++)
+            {
+                GL.DeleteTexture(textureObjectList[i].GetTextureNumber);
+            }
+            systemManager.DeleteShaders();
+        }
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -215,5 +232,6 @@ namespace OpenGL_Game
             GL.Flush();
             SwapBuffers();
         }
+
     }
 }

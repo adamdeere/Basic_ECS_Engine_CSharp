@@ -31,7 +31,13 @@ namespace OpenGL_Game.Objects
 
             }
         }
-
+        public void DeleteBuffere()
+        {
+            foreach (var item in m_Geometry)
+            {
+                item.DeleteGeometry();
+            }
+        }
         public string GetModelTag
         {
             get { return m_Tag; }
