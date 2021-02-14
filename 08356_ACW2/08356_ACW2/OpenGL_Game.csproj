@@ -57,15 +57,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\ComponentGeometry.cs" />
+    <Compile Include="Components\ComponentMaterial.cs" />
     <Compile Include="Components\ComponentTexture.cs" />
     <Compile Include="Components\ComponentPosition.cs" />
+    <Compile Include="Components\ComponentTransform.cs" />
     <Compile Include="Objects\Entity.cs" />
     <Compile Include="Managers\EntityManager.cs" />
     <Compile Include="Objects\Geometry.cs" />
     <Compile Include="Components\IComponent.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="Objects\Material.cs" />
+    <Compile Include="Objects\MaterialObject.cs" />
     <Compile Include="Objects\ModelObject.cs" />
     <Compile Include="Objects\TextureObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

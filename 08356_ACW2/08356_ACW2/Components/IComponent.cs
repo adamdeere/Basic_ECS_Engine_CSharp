@@ -9,7 +9,7 @@ namespace OpenGL_Game.Components
         COMPONENT_NONE = 0,
 	    COMPONENT_TRANSFORM = 1 << 0,
         COMPONENT_GEOMETRY = 1 << 1,
-        COMPONENT_TEXTURE  = 1 << 2
+        COMPONENT_MATERIAL  = 1 << 2
     }
 
     interface IComponent

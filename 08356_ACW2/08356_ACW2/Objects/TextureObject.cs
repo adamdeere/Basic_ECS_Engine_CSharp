@@ -45,13 +45,9 @@ namespace OpenGL_Game.Objects
 
             m_TextureNumber = texture;
         }
-        public int GetTextureNumber
-        {
-            get { return m_TextureNumber; }
-        }
-        public string GetTextureTag
-        {
-            get { return m_Tag; }
-        }
+        public int GetTextureNumber => m_TextureNumber;
+
+        public string GetTextureTag => m_Tag;
+       
     }
 }

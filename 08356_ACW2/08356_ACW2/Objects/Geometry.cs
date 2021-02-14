@@ -12,8 +12,8 @@ namespace OpenGL_Game.Objects
 {
     public class Geometry
     {
-        List<float> vertices = new List<float>();
-        int numberOfTriangles;
+        private List<float> vertices = new List<float>();
+        private int numberOfTriangles;
 
         // Graphics
         private int vao_Handle;
@@ -29,7 +29,7 @@ namespace OpenGL_Game.Objects
         /// <param name="vertexCount"></param>
         public Geometry(List<Vector3D[]> vertList, int[] indices, int vertexCount)
         {
-            numberOfTriangles = vertexCount;
+            numberOfTriangles = indices.Length;
             //takes the number of vertices to be loaded in per mesh sectioon
             for (int i = 0; i < vertexCount; i++)
             {
@@ -40,7 +40,7 @@ namespace OpenGL_Game.Objects
                     Vector3D k = vert[i];
                     vertices.Add(k.X);
                     vertices.Add(k.Y);
-                    //ignores the 3rd element for the tex coord as there is only two and would be a ;large waste of memory on larger models
+                    //ignores the 3rd element for the tex coord as there is only two and would be a large waste of memory on larger models
                     if (j != 1)
                         vertices.Add(k.Z);
 
@@ -161,8 +161,6 @@ namespace OpenGL_Game.Objects
 
         public void Render()
         {
-            //GL.BindVertexArray(vao_Handle);
-            //GL.DrawArrays(PrimitiveType.Triangles, 0, numberOfTriangles * 3);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo_verts[0]);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, vbo_verts[1]);

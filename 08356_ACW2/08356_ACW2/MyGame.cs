@@ -9,7 +9,7 @@ using OpenGL_Game.Objects;
 using OpenTK.Graphics;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
 
 namespace OpenGL_Game
 {
@@ -23,13 +23,13 @@ namespace OpenGL_Game
         private SystemManager systemManager;
         private List<ModelObject> modelObjectList = new List<ModelObject>();
         private List<TextureObject> textureObjectList = new List<TextureObject>();
-        private List<Material> matObjectList = new List<Material>();
+        private List<MaterialObject> matObjectList = new List<MaterialObject>();
 
         public static MyGame gameInstance;
 
         public MyGame() 
-            : base(800, // Width
-                600, // Height
+            : base(1200, // Width
+                900, // Height
                 GraphicsMode.Default,
                 "Component based tower",
                 GameWindowFlags.Default,
@@ -49,25 +49,26 @@ namespace OpenGL_Game
             Entity newEntity;
 
             newEntity = new Entity("tower");
-            newEntity.AddComponent(new ComponentPosition(-2.0f, -1.0f, -4.0f));
-            newEntity.AddComponent(new ComponentGeometry(FindModels("tower")));
-            newEntity.AddComponent(new ComponentTexture("Textures/spaceship.png"));
+            //
+            newEntity.AddComponent(new ComponentTransform(new Vector3(0, 0, -2.0f), new Vector3(1,1,1), new Vector3(0,0,0)));
+            newEntity.AddComponent(new ComponentGeometry(FindModels("smallSphere")));
+            newEntity.AddComponent(new ComponentMaterial(FindMaterial("scene")));
             entityManager.AddEntity(newEntity);
 
-            newEntity = new Entity("cylinder");
-            newEntity.AddComponent(new ComponentPosition(-2.0f, -1.0f, -4.0f));
-           // newEntity.AddComponent(new ComponentGeometry("Geometry/CubeSphere.fbx"));
-            newEntity.AddComponent(new ComponentTexture("Textures/spaceship.png"));
-            entityManager.AddEntity(newEntity);
+            //newEntity = new Entity("cylinder");
+            //newEntity.AddComponent(new ComponentPosition(-2.0f, -1.0f, -4.0f));
+            //// newEntity.AddComponent(new ComponentGeometry("Geometry/CubeSphere.fbx"));
+            ////newEntity.AddComponent(new ComponentMaterial(FindMaterial("scene")));
+            ////  entityManager.AddEntity(newEntity);
 
-            newEntity = new Entity("sphere");
-            newEntity.AddComponent(new ComponentPosition(2.0f, 0.0f, -3.0f));
-           // newEntity.AddComponent(new ComponentGeometry("Geometry/Cube.fbx"));
-            newEntity.AddComponent(new ComponentTexture("Textures/spaceship.png"));
-           // entityManager.AddEntity(newEntity);
-            float g = (Vector3.Dot(new Vector3(1,2,3), new Vector3(1,1,1) * new Vector3(2,2,2)));
-            Vector3 t = new Vector3(1, 2, 3);
-            float a = t.Length;
+            //newEntity = new Entity("sphere");
+            //newEntity.AddComponent(new ComponentPosition(2.0f, 0.0f, -3.0f));
+            //// newEntity.AddComponent(new ComponentGeometry("Geometry/Cube.fbx"));
+            ////newEntity.AddComponent(new ComponentMaterial(FindMaterial("scene")));
+            //// entityManager.AddEntity(newEntity);
+            //float g = (Vector3.Dot(new Vector3(1,2,3), new Vector3(1,1,1) * new Vector3(2,2,2)));
+            //Vector3 t = new Vector3(1, 2, 3);
+            //float a = t.Length;
             
         }
 
@@ -119,13 +120,19 @@ namespace OpenGL_Game
                     TextureObject texObject = new TextureObject(result[0], "Textures/" + result[1]);
 
                     textureObjectList.Add(texObject);
-                    SortTextures(texObject);
+                    new Thread(() => { SortTextures(texObject);}).Start();
+                  
                   
                 }
             }
         }
+        /// <summary>
+        /// this method sorts individual textures into one Material object
+        /// </summary>
+        /// <param name="texObj"></param>
         private void SortTextures(TextureObject texObj)
         {
+           
             //checks to see if there is something in the list already for a comarison
             if (matObjectList.Count > 0)
             {
@@ -137,19 +144,27 @@ namespace OpenGL_Game
                         return;
                     }
                 }
-                matObjectList.Add(new Material(texObj.GetTextureTag));
+                matObjectList.Add(new MaterialObject(texObj.GetTextureTag));
             }
             //if we get here, we can assume that we are at the start of the list and we need to create an entry into the matrial manager
             else
             {
-                matObjectList.Add(new Material(texObj.GetTextureTag));
+                matObjectList.Add(new MaterialObject(texObj.GetTextureTag));
                 matObjectList[0].AddTexture(texObj);
             }
             
         }
-        private void FindTextures()
+        private MaterialObject FindMaterial(string matTag)
         {
-
+            for (int i = 0; i < matObjectList.Count; i++)
+            {
+                if (matObjectList[i].GetMatTag == matTag)
+                {
+                    return matObjectList[i];
+                }
+            }
+            //if we get here, the model has not been found in the list and should be handled accordingly
+            throw new ArgumentException("could not find model");
         }
 
         /// <summary>
@@ -158,7 +173,9 @@ namespace OpenGL_Game
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            GL.Enable(EnableCap.DepthTest);
+            GL.ClearColor(Color4.CornflowerBlue);
+            GL.Enable(EnableCap.CullFace);
             view = Matrix4.LookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
             projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 800f / 480f, 0.01f, 100f);
             LoadModels();
