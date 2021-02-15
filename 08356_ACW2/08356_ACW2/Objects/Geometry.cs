@@ -47,7 +47,7 @@ namespace OpenGL_Game.Objects
                 }
             }
         }
-        public void BindGeometry(int handle, ref int[] vao)
+        public void BindGeometry(int handle, ref int[] vao, ShaderObject shader)
         {
             GL.GenBuffers(2, vbo_verts);
             vao_Handle = handle;
@@ -76,24 +76,25 @@ namespace OpenGL_Game.Objects
             int bufferSize = 14 * sizeof(float);
 
             // Positions
-            GL.EnableVertexAttribArray(0);
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, bufferSize, 0);
+            GL.VertexAttribPointer(shader.GetPos, 3, VertexAttribPointerType.Float, false, bufferSize, 0);
 
             // Tex Coords
-            GL.EnableVertexAttribArray(1);
-            GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, bufferSize, 3 * sizeof(float));
+            GL.VertexAttribPointer(shader.GetVtexAtt, 2, VertexAttribPointerType.Float, false, bufferSize, 3 * sizeof(float));
 
             // Normals
-            GL.EnableVertexAttribArray(2);
-            GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, bufferSize, 5 * sizeof(float));
+            GL.VertexAttribPointer(shader.GetNormAtt, 3, VertexAttribPointerType.Float, false, bufferSize, 5 * sizeof(float));
 
             // BiTan
-            GL.EnableVertexAttribArray(3);
-            GL.VertexAttribPointer(3, 3, VertexAttribPointerType.Float, false, bufferSize, 8 * sizeof(float));
+            GL.VertexAttribPointer(shader.GetBiTanAtt, 3, VertexAttribPointerType.Float, false, bufferSize, 8 * sizeof(float));
 
             // Tan
-            GL.EnableVertexAttribArray(4);
-            GL.VertexAttribPointer(4, 3, VertexAttribPointerType.Float, false, bufferSize, 11 * sizeof(float));
+            GL.VertexAttribPointer(shader.GetVTanAtt, 3, VertexAttribPointerType.Float, false, bufferSize, 11 * sizeof(float));
+
+            GL.EnableVertexAttribArray(shader.GetPos);
+            GL.EnableVertexAttribArray(shader.GetVtexAtt);
+            GL.EnableVertexAttribArray(shader.GetNormAtt);
+            GL.EnableVertexAttribArray(shader.GetBiTanAtt);
+            GL.EnableVertexAttribArray(shader.GetVTanAtt);
             GL.BindVertexArray(0);
           
         }

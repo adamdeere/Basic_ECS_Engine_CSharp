@@ -5,11 +5,13 @@ namespace OpenGL_Game.Objects
 {
     class ModelObject
     {
+        private string m_ShaderType;
         private string m_Tag;
         private Geometry[] m_Geometry;
         private int m_NumberOfMeshes;
-        public ModelObject(string tag, string fileName)
+        public ModelObject(string tag, string fileName, string shaderType)
         {
+            m_ShaderType = shaderType;
             m_Tag = tag;
             Scene model;
             AssimpContext importer = new AssimpContext();
@@ -51,5 +53,6 @@ namespace OpenGL_Game.Objects
         {
             get { return m_Geometry; }
         }
+        public string GetShaderType => m_ShaderType;
     }
 }

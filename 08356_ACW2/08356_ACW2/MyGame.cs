@@ -30,8 +30,8 @@ namespace OpenGL_Game
         public static MyGame gameInstance;
 
         public MyGame() 
-            : base(1200, // Width
-                900, // Height
+            : base(1000, // Width
+                800, // Height
                 GraphicsMode.Default,
                 "Component based tower",
                 GameWindowFlags.Default,
@@ -60,9 +60,9 @@ namespace OpenGL_Game
             entityManager.AddEntity(newEntity);
 
             newEntity = new Entity("tower");
-            newEntity.AddComponent(new ComponentTransform(new Vector3(2, 0, -2), new Vector3(1, 1, 1), new Vector3(0, 0, 0)));
+            newEntity.AddComponent(new ComponentTransform(new Vector3(2, 0, -2), new Vector3(1, 1, 1), new Vector3(2, 0, 0)));
             newEntity.AddComponent(new ComponentModel(modelManager.FindModel("cube")));
-            newEntity.AddComponent(new ComponentMaterial(matManager.FindMaterial("scene")));
+            newEntity.AddComponent(new ComponentMaterial(matManager.FindMaterial("test")));
             entityManager.AddEntity(newEntity);
 
             //newEntity = new Entity("sphere");
@@ -92,10 +92,10 @@ namespace OpenGL_Game
             GL.Enable(EnableCap.DepthTest);
             GL.ClearColor(Color4.CornflowerBlue);
             GL.Enable(EnableCap.CullFace);
-            view = Matrix4.LookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+            view = Matrix4.LookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
             projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 800f / 480f, 0.01f, 100f);
             
-            modelManager.BindGeometetry();
+            modelManager.BindGeometetry(shaderManager);
             CreateSystems();
            
             CreateEntities();
