@@ -11,24 +11,33 @@ namespace OpenGL_Game.Managers
     {
         static Dictionary<string, Geometry> geometryDictionary = new Dictionary<string, Geometry>();
         static Dictionary<string, int> textureDictionary = new Dictionary<string, int>();
+        static int[] mVertexArrayObjectIDs;
+        private static int bufferCount = 0;
 
-      
+        public static void BindBufferArray(List<ModelObject> modelList, int modelCount)
+        {
+           
+            foreach (var item in modelList)
+            {
+                bufferCount += item.GetNumberOfMeshes;
+            }
 
-        //public static Geometry LoadGeometry(string filename)
-        //{
-        //    Geometry geometry;
-        //    geometryDictionary.TryGetValue(filename, out geometry);
-        //    if (geometry == null)
-        //    {
-        //        geometry = new Geometry();
-        //        geometry.LoadObject(filename);
-        //        geometryDictionary.Add(filename, geometry);
-        //    }
+            mVertexArrayObjectIDs = new int[bufferCount];
+            GL.GenBuffers(bufferCount, mVertexArrayObjectIDs);
+            int loopCount = 0;
 
-        //    return geometry;
-        //}
-
-      
+            for (int i = 0; i < modelList.Count; i++)
+            {
+                Geometry[] geo = modelList[i].GetGeometry;
+                for (int j = 0; j < geo.Length; j++)
+                {
+                   
+                    geo[j].BindGeometry(loopCount, mVertexArrayObjectIDs);
+                    loopCount++;
+                }
+            }
+            
+        }
         public static int LoadTexture(string filename)
         {
             if (string.IsNullOrEmpty(filename))
@@ -57,6 +66,10 @@ namespace OpenGL_Game.Managers
             }
  
             return texture;
+        }
+        public static void DeleteBuffers()
+        {
+            GL.DeleteVertexArrays(bufferCount, mVertexArrayObjectIDs);
         }
     }
 }

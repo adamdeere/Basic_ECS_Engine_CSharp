@@ -124,7 +124,7 @@ namespace OpenGL_Game.Systems
         public void Draw(Matrix4 world, Geometry geometry, ComponentMaterial mat)
         {
             GL.UseProgram(pgmID);
-           // GL.CullFace(CullFaceMode.Front);
+          //  GL.CullFace(CullFaceMode.Front);
             GL.Uniform1(uniform_stex, 0);
             mat.SetActiveTextues();
 

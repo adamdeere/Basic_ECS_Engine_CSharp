@@ -7,6 +7,7 @@ namespace OpenGL_Game.Objects
     {
         private string m_Tag;
         private Geometry[] m_Geometry;
+        private int m_NumberOfMeshes;
         public ModelObject(string tag, string fileName)
         {
             m_Tag = tag;
@@ -15,6 +16,7 @@ namespace OpenGL_Game.Objects
             importer.SetConfig(new Assimp.Configs.NormalSmoothingAngleConfig(66.0f));
             model = importer.ImportFile(fileName, PostProcessPreset.TargetRealTimeMaximumQuality);
             m_Geometry = new Geometry[model.MeshCount];
+            m_NumberOfMeshes = m_Geometry.Length;
             int count = 0;
             foreach (var item in model.Meshes)
             {
@@ -31,6 +33,8 @@ namespace OpenGL_Game.Objects
 
             }
         }
+        public int GetNumberOfMeshes => m_NumberOfMeshes;
+        
         public void DeleteBuffere()
         {
             foreach (var item in m_Geometry)

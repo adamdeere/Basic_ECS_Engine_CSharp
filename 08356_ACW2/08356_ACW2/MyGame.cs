@@ -50,7 +50,7 @@ namespace OpenGL_Game
 
             newEntity = new Entity("tower");
             //
-            newEntity.AddComponent(new ComponentTransform(new Vector3(0, 0, -2.0f), new Vector3(1,1,1), new Vector3(0,0,0)));
+            newEntity.AddComponent(new ComponentTransform(new Vector3(0, 0, -2), new Vector3(1,1,1), new Vector3(0,0,0)));
             newEntity.AddComponent(new ComponentGeometry(FindModels("smallSphere")));
             newEntity.AddComponent(new ComponentMaterial(FindMaterial("scene")));
             entityManager.AddEntity(newEntity);
@@ -82,18 +82,21 @@ namespace OpenGL_Game
 
         private void LoadModels()
         {
+            int count = 0;
             //reads all of the models in from a file and pops them into a list with a tag so that they can be found and used by whichever object needs it
             using (StreamReader modelSR = new StreamReader("Geometry/ModelList.txt"))
             {
-               
+              
                 while (modelSR.Peek() > -1)
                 {
 
                     string line = modelSR.ReadLine();
                     string[] result = line.Split(new string[] { "\n", "\r\n", "," }, StringSplitOptions.RemoveEmptyEntries);
                     modelObjectList.Add(new ModelObject(result[0], "Geometry/" + result[1]));
+                    count++;
                 }
             }
+            ResourceManager.BindBufferArray(modelObjectList, modelObjectList.Count);
         }
         private ModelObject FindModels(string modelTag)
         {
@@ -202,6 +205,7 @@ namespace OpenGL_Game
                 GL.DeleteTexture(textureObjectList[i].GetTextureNumber);
             }
             systemManager.DeleteShaders();
+            ResourceManager.DeleteBuffers();
         }
         /// <summary>
         /// Allows the game to run logic such as updating the world,

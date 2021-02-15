@@ -1,9 +1,3 @@
-﻿smallSphere,SmallSphere.fbx
-bigSphere,BigSphere.fbx
-doomSphere,DoomSphere.fbx
-tower,Tower.fbx
-cylinder,SmallCylinder.fbx
-cylinder,BigCylinder.fbx
-floor,Floor_Quad.fbx
-portal,Portal_Quad.fbx
+﻿quad,CubeSphere.fbx
 cube,Cube.fbx
+smallSphere,SmallSphere.fbx

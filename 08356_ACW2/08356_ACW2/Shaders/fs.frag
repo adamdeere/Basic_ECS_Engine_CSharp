@@ -10,6 +10,5 @@ out vec4 Color;
  
 void main()
 {
-    //Color = vec4(v_Normal, 1);
     Color = texture2D(s_texture, v_TexCoord);
 }
