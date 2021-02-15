@@ -23,7 +23,7 @@ namespace OpenGL_Game
         private SystemManager systemManager;
         private ModelManager modelManager;
         private ShaderManager shaderManager;
-        private List<ModelObject> modelObjectList = new List<ModelObject>();
+        private MaterialManager matManager;
         private List<TextureObject> textureObjectList = new List<TextureObject>();
         private List<MaterialObject> matObjectList = new List<MaterialObject>();
 
@@ -43,6 +43,7 @@ namespace OpenGL_Game
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
+            matManager = new MaterialManager("Textures/TextureList.txt");
             shaderManager = new ShaderManager("Shaders/ShaderList.txt");
             modelManager = new ModelManager("Geometry/ModelList.txt");
         }
@@ -55,13 +56,13 @@ namespace OpenGL_Game
             //
             newEntity.AddComponent(new ComponentTransform(new Vector3(0, 0, -2), new Vector3(1,1,1), new Vector3(0,0,0)));
             newEntity.AddComponent(new ComponentModel(modelManager.FindModel("smallSphere")));
-            newEntity.AddComponent(new ComponentMaterial(FindMaterial("scene")));
+            newEntity.AddComponent(new ComponentMaterial(matManager.FindMaterial("scene")));
             entityManager.AddEntity(newEntity);
 
             newEntity = new Entity("tower");
             newEntity.AddComponent(new ComponentTransform(new Vector3(2, 0, -2), new Vector3(1, 1, 1), new Vector3(0, 0, 0)));
             newEntity.AddComponent(new ComponentModel(modelManager.FindModel("cube")));
-            newEntity.AddComponent(new ComponentMaterial(FindMaterial("scene")));
+            newEntity.AddComponent(new ComponentMaterial(matManager.FindMaterial("scene")));
             entityManager.AddEntity(newEntity);
 
             //newEntity = new Entity("sphere");
@@ -82,68 +83,6 @@ namespace OpenGL_Game
             newSystem = new SystemRender(shaderManager.FindShader("pbrShader"));
             systemManager.AddSystem(newSystem);
         }
-
-      
-        private void LoadTextures()
-        {
-            //reads in all of the textures from a file list
-            using (StreamReader textureSR = new StreamReader("Textures/TextureList.txt"))
-            {
-                while (textureSR.Peek() > -1)
-                {
-
-                    string line = textureSR.ReadLine();
-                    string[] result = line.Split(new string[] { "\n", "\r\n", "," }, StringSplitOptions.RemoveEmptyEntries);
-                    TextureObject texObject = new TextureObject(result[0], "Textures/" + result[1]);
-
-                    textureObjectList.Add(texObject);
-                    new Thread(() => { SortTextures(texObject);}).Start();
-                  
-                  
-                }
-            }
-        }
-        /// <summary>
-        /// this method sorts individual textures into one Material object
-        /// </summary>
-        /// <param name="texObj"></param>
-        private void SortTextures(TextureObject texObj)
-        {
-           
-            //checks to see if there is something in the list already for a comarison
-            if (matObjectList.Count > 0)
-            {
-                for (int i = 0; i < matObjectList.Count; i++)
-                {
-                    if (matObjectList[i].GetMatTag == texObj.GetTextureTag)
-                    {
-                        matObjectList[i].AddTexture(texObj);
-                        return;
-                    }
-                }
-                matObjectList.Add(new MaterialObject(texObj.GetTextureTag));
-            }
-            //if we get here, we can assume that we are at the start of the list and we need to create an entry into the matrial manager
-            else
-            {
-                matObjectList.Add(new MaterialObject(texObj.GetTextureTag));
-                matObjectList[0].AddTexture(texObj);
-            }
-            
-        }
-        private MaterialObject FindMaterial(string matTag)
-        {
-            for (int i = 0; i < matObjectList.Count; i++)
-            {
-                if (matObjectList[i].GetMatTag == matTag)
-                {
-                    return matObjectList[i];
-                }
-            }
-            //if we get here, the model has not been found in the list and should be handled accordingly
-            throw new ArgumentException("could not find model");
-        }
-
         /// <summary>
         /// Allows the game to setup the environment and matrices.
         /// </summary>
@@ -159,7 +98,6 @@ namespace OpenGL_Game
             modelManager.BindGeometetry();
             CreateSystems();
            
-            LoadTextures();
             CreateEntities();
          
 
@@ -171,14 +109,8 @@ namespace OpenGL_Game
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.BindVertexArray(0);
-            for (int i = 0; i < modelObjectList.Count; i++)
-            {
-                modelObjectList[i].DeleteBuffere();
-            }
-            for (int i = 0; i < textureObjectList.Count; i++)
-            {
-                GL.DeleteTexture(textureObjectList[i].GetTextureNumber);
-            }
+           
+           
             shaderManager.DeleteShaders();
             modelManager.DeleteBuffers();
         }

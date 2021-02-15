@@ -62,6 +62,10 @@ namespace OpenGL_Game.Managers
         public  void DeleteBuffers()
         {
             GL.DeleteVertexArrays(bufferCount, mVertexArrayObjectIDs);
+            foreach (var mesh in m_ModelDictionary)
+            {
+                mesh.Value.DeleteBuffere();
+            }
         }
     }
 }
