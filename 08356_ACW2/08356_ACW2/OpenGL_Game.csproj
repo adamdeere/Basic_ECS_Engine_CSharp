@@ -72,6 +72,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="Objects\MaterialObject.cs" />
     <Compile Include="Objects\ModelObject.cs" />
+    <Compile Include="Objects\ShaderObject.cs" />
     <Compile Include="Objects\TextureObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Managers\ResourceManager.cs" />
@@ -160,6 +161,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\ShaderList.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Textures\Scene_Colour.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

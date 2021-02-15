@@ -43,7 +43,7 @@ namespace OpenGL_Game
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
-            shaderManager = new ShaderManager("Geometry/ModelList.txt");
+            shaderManager = new ShaderManager("Shaders/ShaderList.txt");
             modelManager = new ModelManager("Geometry/ModelList.txt");
         }
 
@@ -79,29 +79,11 @@ namespace OpenGL_Game
         {
             ISystem newSystem;
 
-            newSystem = new SystemRender();
+            newSystem = new SystemRender(shaderManager.FindShader("pbrShader"));
             systemManager.AddSystem(newSystem);
         }
 
-        private void LoadModels()
-        {
-            int count = 0;
-            //reads all of the models in from a file and pops them into a list with a tag so that they can be found and used by whichever object needs it
-            
-           // ResourceManager.BindBufferArray(modelObjectList, modelObjectList.Count);
-        }
-        private ModelObject FindModels(string modelTag)
-        {
-            for (int i = 0; i < modelObjectList.Count; i++)
-            {
-                if (modelObjectList[i].GetModelTag == modelTag)
-                {
-                    return modelObjectList[i];
-                }
-            }
-            //if we get here, the model has not been found in the list and should be handled accordingly
-            throw new ArgumentException("could not find model");
-        }
+      
         private void LoadTextures()
         {
             //reads in all of the textures from a file list
@@ -173,10 +155,10 @@ namespace OpenGL_Game
             GL.Enable(EnableCap.CullFace);
             view = Matrix4.LookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
             projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 800f / 480f, 0.01f, 100f);
-
+            
             modelManager.BindGeometetry();
             CreateSystems();
-            LoadModels();
+           
             LoadTextures();
             CreateEntities();
          
@@ -197,7 +179,7 @@ namespace OpenGL_Game
             {
                 GL.DeleteTexture(textureObjectList[i].GetTextureNumber);
             }
-            systemManager.DeleteShaders();
+            shaderManager.DeleteShaders();
             modelManager.DeleteBuffers();
         }
         /// <summary>

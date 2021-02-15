@@ -5,6 +5,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenGL_Game.Components;
 using OpenGL_Game.Objects;
+using OpenGL_Game.Managers;
 
 namespace OpenGL_Game.Systems
 {
@@ -12,66 +13,13 @@ namespace OpenGL_Game.Systems
     {
         const ComponentTypes MASK = (ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_MODEL | ComponentTypes.COMPONENT_MATERIAL);
 
-        protected int pgmID;
-        protected int vsID;
-        protected int fsID;
-        protected int attribute_vtex;
-        protected int attribute_vpos;
+        ShaderObject k;
 
-        protected int attribute_vNorm;
-        protected int attribute_vBiTan;
-        protected int attribute_vTan;
-       
-        protected int uniform_stex;
-        protected int uniform_mview;
-
-        public SystemRender()
+        public SystemRender(ShaderObject h)
         {
-            pgmID = GL.CreateProgram();
-            LoadShader("Shaders/vs.vert", ShaderType.VertexShader, pgmID, out vsID);
-            LoadShader("Shaders/fs.frag", ShaderType.FragmentShader, pgmID, out fsID);
-
-
-            GL.LinkProgram(pgmID);
-
-            attribute_vpos = GL.GetAttribLocation(pgmID, "a_Position");
-            attribute_vtex = GL.GetAttribLocation(pgmID, "a_TexCoord");
-
-            attribute_vNorm = GL.GetAttribLocation(pgmID, "a_Normal");
-            attribute_vBiTan = GL.GetAttribLocation(pgmID, "a_biTan");
-            attribute_vTan = GL.GetAttribLocation(pgmID, "a_Tan");
-          
-
-            uniform_mview = GL.GetUniformLocation(pgmID, "WorldViewProj");
-
-            uniform_stex  = GL.GetUniformLocation(pgmID, "s_texture");
-
-            if (attribute_vpos == -1 || attribute_vtex == -1 || uniform_stex == -1 || uniform_mview == -1)
-            {
-                Console.WriteLine("Error binding attributes");
-            }
-            if (attribute_vNorm == -1 || attribute_vBiTan == -1 || attribute_vTan == -1)
-            {
-                Console.WriteLine("Error binding attributes");
-            }
+            k = h;
         }
 
-        void LoadShader(string filename, ShaderType type, int program, out int address)
-        {
-            address = GL.CreateShader(type);
-            using (StreamReader sr = new StreamReader(filename))
-            {
-                GL.ShaderSource(address, sr.ReadToEnd());
-            }
-            GL.CompileShader(address);
-            GL.GetShader(address, ShaderParameter.CompileStatus, out int result);
-            if (result == 0)
-            {
-                throw new Exception("Failed to compile shader!" + GL.GetShaderInfoLog(address));
-            }
-            GL.AttachShader(program, address);
-         
-        }
 
         public string Name
         {
@@ -123,13 +71,13 @@ namespace OpenGL_Game.Systems
 
         public void Draw(Matrix4 world, Geometry geometry, ComponentMaterial mat)
         {
-            GL.UseProgram(pgmID);
+            GL.UseProgram(k.GetProgramId);
           //  GL.CullFace(CullFaceMode.Front);
-            GL.Uniform1(uniform_stex, 0);
+            GL.Uniform1(k.GetUniformStex, 0);
             mat.SetActiveTextues();
 
             Matrix4 worldViewProjection = world * MyGame.gameInstance.view * MyGame.gameInstance.projection;
-            GL.UniformMatrix4(uniform_mview, false, ref worldViewProjection);
+            GL.UniformMatrix4(k.GetuniformMView, false, ref worldViewProjection);
 
             geometry.Render();
 
@@ -139,11 +87,7 @@ namespace OpenGL_Game.Systems
 
         public void OnDelete()
         {
-            GL.DetachShader(pgmID, vsID);
-            GL.DetachShader(pgmID, fsID);
-            GL.DeleteShader(vsID);
-            GL.DeleteShader(fsID);
-            GL.DeleteProgram(pgmID);
+           
         }
     }
 }
