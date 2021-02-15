@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OpenTK.Graphics;
-using OpenGL_Game.Managers;
+﻿using OpenGL_Game.Managers;
 
 namespace OpenGL_Game.Components
 {
@@ -23,7 +18,7 @@ namespace OpenGL_Game.Components
 
         public ComponentTypes ComponentType
         {
-            get { return ComponentTypes.COMPONENT_TEXTURE; }
+            get { return ComponentTypes.COMPONENT_MATERIAL; }
         }
     }
 }

@@ -11,24 +11,17 @@ namespace OpenGL_Game.Managers
     {
         static Dictionary<string, Geometry> geometryDictionary = new Dictionary<string, Geometry>();
         static Dictionary<string, int> textureDictionary = new Dictionary<string, int>();
+        static int[] mVertexArrayObjectIDs;
+       
 
-      
+        public static void BindBufferArray(List<ModelObject> modelList, int modelCount)
+        {
+          
+            int loopCount = 0;
 
-        //public static Geometry LoadGeometry(string filename)
-        //{
-        //    Geometry geometry;
-        //    geometryDictionary.TryGetValue(filename, out geometry);
-        //    if (geometry == null)
-        //    {
-        //        geometry = new Geometry();
-        //        geometry.LoadObject(filename);
-        //        geometryDictionary.Add(filename, geometry);
-        //    }
-
-        //    return geometry;
-        //}
-
-      
+            
+        }
+        public static int[] GetVAO => mVertexArrayObjectIDs;
         public static int LoadTexture(string filename)
         {
             if (string.IsNullOrEmpty(filename))
@@ -58,5 +51,6 @@ namespace OpenGL_Game.Managers
  
             return texture;
         }
+       
     }
 }

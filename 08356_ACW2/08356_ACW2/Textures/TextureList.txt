@@ -1,0 +1,5 @@
+﻿scene,Scene_Colour.png,1
+scene,Scene_Height.png,3
+scene,Scene_Metalic.png,4
+scene,Scene_Normal.png,2
+scene,Scene_Roughness.png,5

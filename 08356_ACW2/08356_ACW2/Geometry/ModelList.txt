@@ -1,0 +1,3 @@
+﻿quad,CubeSphere.fbx,pbrShader
+cube,Cube.fbx,pbrShader
+smallSphere,SmallSphere.fbx,pbrShader
