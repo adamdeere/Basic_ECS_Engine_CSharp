@@ -21,6 +21,8 @@ namespace OpenGL_Game
         public Matrix4 view, projection;
         private EntityManager entityManager;
         private SystemManager systemManager;
+        private ModelManager modelManager;
+        private ShaderManager shaderManager;
         private List<ModelObject> modelObjectList = new List<ModelObject>();
         private List<TextureObject> textureObjectList = new List<TextureObject>();
         private List<MaterialObject> matObjectList = new List<MaterialObject>();
@@ -41,7 +43,8 @@ namespace OpenGL_Game
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
-         
+            shaderManager = new ShaderManager("Geometry/ModelList.txt");
+            modelManager = new ModelManager("Geometry/ModelList.txt");
         }
 
         private void CreateEntities()
@@ -51,15 +54,15 @@ namespace OpenGL_Game
             newEntity = new Entity("tower");
             //
             newEntity.AddComponent(new ComponentTransform(new Vector3(0, 0, -2), new Vector3(1,1,1), new Vector3(0,0,0)));
-            newEntity.AddComponent(new ComponentGeometry(FindModels("smallSphere")));
+            newEntity.AddComponent(new ComponentModel(modelManager.FindModel("smallSphere")));
             newEntity.AddComponent(new ComponentMaterial(FindMaterial("scene")));
             entityManager.AddEntity(newEntity);
 
-            //newEntity = new Entity("cylinder");
-            //newEntity.AddComponent(new ComponentPosition(-2.0f, -1.0f, -4.0f));
-            //// newEntity.AddComponent(new ComponentGeometry("Geometry/CubeSphere.fbx"));
-            ////newEntity.AddComponent(new ComponentMaterial(FindMaterial("scene")));
-            ////  entityManager.AddEntity(newEntity);
+            newEntity = new Entity("tower");
+            newEntity.AddComponent(new ComponentTransform(new Vector3(2, 0, -2), new Vector3(1, 1, 1), new Vector3(0, 0, 0)));
+            newEntity.AddComponent(new ComponentModel(modelManager.FindModel("cube")));
+            newEntity.AddComponent(new ComponentMaterial(FindMaterial("scene")));
+            entityManager.AddEntity(newEntity);
 
             //newEntity = new Entity("sphere");
             //newEntity.AddComponent(new ComponentPosition(2.0f, 0.0f, -3.0f));
@@ -69,7 +72,7 @@ namespace OpenGL_Game
             //float g = (Vector3.Dot(new Vector3(1,2,3), new Vector3(1,1,1) * new Vector3(2,2,2)));
             //Vector3 t = new Vector3(1, 2, 3);
             //float a = t.Length;
-            
+
         }
 
         private void CreateSystems()
@@ -84,19 +87,8 @@ namespace OpenGL_Game
         {
             int count = 0;
             //reads all of the models in from a file and pops them into a list with a tag so that they can be found and used by whichever object needs it
-            using (StreamReader modelSR = new StreamReader("Geometry/ModelList.txt"))
-            {
-              
-                while (modelSR.Peek() > -1)
-                {
-
-                    string line = modelSR.ReadLine();
-                    string[] result = line.Split(new string[] { "\n", "\r\n", "," }, StringSplitOptions.RemoveEmptyEntries);
-                    modelObjectList.Add(new ModelObject(result[0], "Geometry/" + result[1]));
-                    count++;
-                }
-            }
-            ResourceManager.BindBufferArray(modelObjectList, modelObjectList.Count);
+            
+           // ResourceManager.BindBufferArray(modelObjectList, modelObjectList.Count);
         }
         private ModelObject FindModels(string modelTag)
         {
@@ -182,6 +174,7 @@ namespace OpenGL_Game
             view = Matrix4.LookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
             projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 800f / 480f, 0.01f, 100f);
 
+            modelManager.BindGeometetry();
             CreateSystems();
             LoadModels();
             LoadTextures();
@@ -205,7 +198,7 @@ namespace OpenGL_Game
                 GL.DeleteTexture(textureObjectList[i].GetTextureNumber);
             }
             systemManager.DeleteShaders();
-            ResourceManager.DeleteBuffers();
+            modelManager.DeleteBuffers();
         }
         /// <summary>
         /// Allows the game to run logic such as updating the world,

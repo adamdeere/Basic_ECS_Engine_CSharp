@@ -4,6 +4,7 @@ using System.Linq;
 using OpenTK.Graphics.OpenGL;
 using Assimp;
 using PrimitiveType = OpenTK.Graphics.OpenGL.PrimitiveType;
+using OpenGL_Game.Managers;
 //using Assimp;
 
 namespace OpenGL_Game.Objects
@@ -46,12 +47,13 @@ namespace OpenGL_Game.Objects
                 }
             }
         }
-        public void BindGeometry(int handle, int[] vao)
+        public void BindGeometry(int handle, ref int[] vao)
         {
+            GL.GenBuffers(2, vbo_verts);
             vao_Handle = handle;
             mVertexArrayObjectIDs = vao;
-            GL.BindVertexArray(mVertexArrayObjectIDs[vao_Handle]);
-            GL.GenBuffers(2, vbo_verts);
+
+            GL.BindVertexArray(vao[vao_Handle]);
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo_verts[0]);
 
             GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(vertices.Count * sizeof(float)), vertices.ToArray<float>(), BufferUsageHint.StaticDraw);
@@ -101,7 +103,7 @@ namespace OpenGL_Game.Objects
         }
         public void Render()
         {
-
+         
             GL.BindVertexArray(mVertexArrayObjectIDs[vao_Handle]);
 
             // shader linking goes here

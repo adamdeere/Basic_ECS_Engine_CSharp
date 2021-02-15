@@ -10,7 +10,7 @@ namespace OpenGL_Game.Systems
 {
     class SystemRender : ISystem
     {
-        const ComponentTypes MASK = (ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_GEOMETRY | ComponentTypes.COMPONENT_MATERIAL);
+        const ComponentTypes MASK = (ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_MODEL | ComponentTypes.COMPONENT_MATERIAL);
 
         protected int pgmID;
         protected int vsID;
@@ -86,9 +86,9 @@ namespace OpenGL_Game.Systems
 
                 IComponent geometryComponent = components.Find(delegate(IComponent component)
                 {
-                    return component.ComponentType == ComponentTypes.COMPONENT_GEOMETRY;
+                    return component.ComponentType == ComponentTypes.COMPONENT_MODEL;
                 });
-                Geometry[] geometry = ((ComponentGeometry)geometryComponent).Geometry();
+                Geometry[] geometry = ((ComponentModel)geometryComponent).Geometry();
 
                 IComponent positionComponent = components.Find(delegate(IComponent component)
                 {

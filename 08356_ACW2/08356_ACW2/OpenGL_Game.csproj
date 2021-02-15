@@ -56,11 +56,14 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Components\ComponentGeometry.cs" />
+    <Compile Include="Components\ComponentModel.cs" />
     <Compile Include="Components\ComponentMaterial.cs" />
     <Compile Include="Components\ComponentTexture.cs" />
     <Compile Include="Components\ComponentPosition.cs" />
     <Compile Include="Components\ComponentTransform.cs" />
+    <Compile Include="Managers\MaterialManager.cs" />
+    <Compile Include="Managers\ModelManager.cs" />
+    <Compile Include="Managers\ShaderManager.cs" />
     <Compile Include="Objects\Entity.cs" />
     <Compile Include="Managers\EntityManager.cs" />
     <Compile Include="Objects\Geometry.cs" />
