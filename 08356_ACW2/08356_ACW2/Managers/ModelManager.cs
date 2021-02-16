@@ -24,7 +24,7 @@ namespace OpenGL_Game.Managers
 
                     string line = modelSR.ReadLine();
                     string[] result = line.Split(new string[] { "\n", "\r\n", "," }, StringSplitOptions.RemoveEmptyEntries);
-                    m_ModelDictionary.Add(result[0], new ModelObject(result[0], "Geometry/" + result[1]));
+                    m_ModelDictionary.Add(result[0], new ModelObject(result[0], "Geometry/" + result[1], result[2]));
                 }
             }
             foreach (var item in m_ModelDictionary)
@@ -32,7 +32,7 @@ namespace OpenGL_Game.Managers
                 bufferCount += item.Value.GetNumberOfMeshes;
             }
         }
-        public void BindGeometetry()
+        public void BindGeometetry(ShaderManager sManager)
         {
             mVertexArrayObjectIDs = new int[bufferCount];
             GL.GenVertexArrays(mVertexArrayObjectIDs.Length, mVertexArrayObjectIDs);
@@ -42,7 +42,7 @@ namespace OpenGL_Game.Managers
                 Geometry[] geo = item.Value.GetGeometry;
                 foreach (var mesh in geo)
                 {
-                    mesh.BindGeometry(loopCount, ref mVertexArrayObjectIDs);
+                    mesh.BindGeometry(loopCount, ref mVertexArrayObjectIDs, sManager.FindShader(item.Value.GetShaderType));
                     loopCount++;
                 }
             }

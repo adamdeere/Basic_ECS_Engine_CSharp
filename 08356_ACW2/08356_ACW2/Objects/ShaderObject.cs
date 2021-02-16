@@ -4,7 +4,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL_Game.Objects
 {
-    class ShaderObject
+    public class ShaderObject
     {
         private string m_Tag;
 

@@ -1,1 +1,2 @@
 ﻿pbrShader,vs.vert,fs.frag
+effectShader,Effectvs.vert,Effectfs.frag

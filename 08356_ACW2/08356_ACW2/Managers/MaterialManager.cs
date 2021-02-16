@@ -26,7 +26,8 @@ namespace OpenGL_Game.Managers
                     TextureObject texObject = new TextureObject(result[0], "Textures/" + result[1]);
 
                     textureObjectList.Add(texObject);
-                    new Thread(() => { SortTextures(texObject); }).Start();
+                    SortTextures(texObject);
+                    //new Thread(() => { SortTextures(texObject); }).Start();
                 }
             }
         }
@@ -45,6 +46,8 @@ namespace OpenGL_Game.Managers
                     }
                 }
                 matObjectList.Add(new MaterialObject(texObj.GetTextureTag));
+                matObjectList[matObjectList.Count - 1].AddTexture(texObj);
+              
             }
             //if we get here, we can assume that we are at the start of the list and we need to create an entry into the matrial manager
             else

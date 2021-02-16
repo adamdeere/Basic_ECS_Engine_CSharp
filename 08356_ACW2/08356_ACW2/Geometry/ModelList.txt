@@ -1,3 +1,8 @@
-﻿quad,CubeSphere.fbx,pbrShader
-cube,Cube.fbx,pbrShader
-smallSphere,SmallSphere.fbx,pbrShader
+﻿SmallCylinder,SmallCylinder.fbx,pbrShader
+BigCylinder,BigCylinder.fbx,pbrShader
+SmallSphere,SmallSphere.fbx,pbrShader
+BigSphere,BigSphere.fbx,pbrShader
+Tower,Tower.fbx,pbrShader
+DoomSphere,DoomSphere.fbx,pbrShader
+Floor,Floor_Quad.fbx,effectShader
+Portal,Portal_Quad.fbx,effectShader
