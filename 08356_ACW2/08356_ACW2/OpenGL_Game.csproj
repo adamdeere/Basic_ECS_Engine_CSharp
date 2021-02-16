@@ -56,10 +56,12 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Components\ComponentBoxCollison.cs" />
+    <Compile Include="Components\ComponentCollsion.cs" />
+    <Compile Include="Components\ComponentDoomSphere.cs" />
     <Compile Include="Components\ComponentModel.cs" />
     <Compile Include="Components\ComponentMaterial.cs" />
-    <Compile Include="Components\ComponentTexture.cs" />
-    <Compile Include="Components\ComponentPosition.cs" />
+    <Compile Include="Components\ComponentPhysics.cs" />
     <Compile Include="Components\ComponentTransform.cs" />
     <Compile Include="Managers\MaterialManager.cs" />
     <Compile Include="Managers\ModelManager.cs" />
@@ -79,6 +81,10 @@
     <Compile Include="Managers\ResourceManager.cs" />
     <Compile Include="Systems\ISystem.cs" />
     <Compile Include="Managers\SystemManager.cs" />
+    <Compile Include="Systems\SystemBox.cs" />
+    <Compile Include="Systems\SystemCollsion.cs" />
+    <Compile Include="Systems\SystemDoomSphere.cs" />
+    <Compile Include="Systems\SystemPhysics.cs" />
     <Compile Include="Systems\SystemRender.cs" />
   </ItemGroup>
   <ItemGroup>

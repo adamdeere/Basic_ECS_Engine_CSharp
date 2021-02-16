@@ -9,7 +9,6 @@ using OpenGL_Game.Objects;
 using OpenTK.Graphics;
 using System.IO;
 using System.Collections.Generic;
-using System.Threading;
 using Newtonsoft.Json;
 
 namespace OpenGL_Game
@@ -25,9 +24,7 @@ namespace OpenGL_Game
         private ModelManager modelManager;
         private ShaderManager shaderManager;
         private MaterialManager matManager;
-        private List<TextureObject> textureObjectList = new List<TextureObject>();
-        private List<MaterialObject> matObjectList = new List<MaterialObject>();
-
+        
         public static MyGame gameInstance;
 
         public MyGame() 
@@ -48,7 +45,10 @@ namespace OpenGL_Game
             shaderManager = new ShaderManager("Shaders/ShaderList.txt");
             modelManager = new ModelManager("Geometry/ModelList.txt");
         }
-
+        /// <summary>
+        /// reads in data from a json file. will have to update it so components are stored in an array on the JSON file to save the
+        /// if statement
+        /// </summary>
         private void CreateEntities()
         {
             Entity newEntity;
@@ -68,6 +68,27 @@ namespace OpenGL_Game
                     newEntity.AddComponent(new ComponentTransform(pos, new Vector3(1, 1, 1), rot));
                     newEntity.AddComponent(new ComponentModel(modelManager.FindModel(name)));
                     newEntity.AddComponent(new ComponentMaterial(matManager.FindMaterial(mat)));
+
+                    if (name.Contains("Cylinder"))
+                    {
+                        newEntity.AddComponent(new ComponentCollsion());
+                    }
+                    else if (name.Contains("Doom"))
+                    {
+                        newEntity.AddComponent(new ComponentDoomSphere());
+                    }
+                    else if (name.Contains("Sphere"))
+                    {
+                        if (!name.StartsWith("Doom"))
+                        {
+                            newEntity.AddComponent(new ComponentPhysics());
+                        }
+                    }
+                    if (name.Contains("Tower"))
+                    {
+                        newEntity.AddComponent(new ComponentBoxCollison());
+                    }
+
                     entityManager.AddEntity(newEntity);
                 }
             }
