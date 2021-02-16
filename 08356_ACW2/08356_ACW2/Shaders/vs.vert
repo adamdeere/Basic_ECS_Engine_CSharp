@@ -7,18 +7,22 @@ in vec3 a_BiTan;
 in vec3 a_Tan;
 
 uniform mat4 WorldViewProj;
+uniform mat4 uModel;
+uniform mat4 uView;
 
 out vec2 v_TexCoord;
 out vec3 v_Normal;
 out vec3 v_BiTan;
 out vec3 v_Tan;
 
+out vec4 oSurfacePosition;
+
 void main()
 {
     gl_Position = WorldViewProj * vec4(a_Position, 1.0);
     v_TexCoord = a_TexCoord;
-    v_Normal = a_Normal;
-    v_BiTan = a_BiTan;
-    v_Tan = v_Tan;
+    oSurfacePosition = vec4(a_Position, 1) * uModel * uView;
+    v_Normal = vec3(normalize(a_Normal * mat3(transpose(inverse(uModel * uView)))));  
+	//v_Normal = vec4(normalize(a_Normal * mat3(transpose(inverse(uModel * uView)))), 1); 
     
 }
