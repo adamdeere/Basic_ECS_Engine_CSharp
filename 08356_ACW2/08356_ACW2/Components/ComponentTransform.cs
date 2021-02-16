@@ -8,12 +8,14 @@ namespace OpenGL_Game.Components
         private Vector3 m_Scale;
         private Vector3 m_Rotation;
         private Vector3 m_OldPosition;
+        private float m_Radius;
        
-        public ComponentTransform(Vector3 pos, Vector3 scale, Vector3 rot)
+        public ComponentTransform(Vector3 pos, Vector3 scale, Vector3 rot, float radius)
         {
             m_Position = pos;
             m_Scale = scale;
             m_Rotation = rot;
+            m_Radius = radius;
         }
 
         public Vector3 Position
@@ -35,6 +37,12 @@ namespace OpenGL_Game.Components
         {
             get { return m_OldPosition; }
             set { m_OldPosition = value; }
+        }
+
+        public float Radius
+        {
+            get { return m_Radius; }
+            set { m_Radius = value; }
         }
 
         public ComponentTypes ComponentType

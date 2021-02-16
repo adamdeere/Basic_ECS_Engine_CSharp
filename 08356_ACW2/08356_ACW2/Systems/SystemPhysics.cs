@@ -50,10 +50,5 @@ namespace OpenGL_Game.Systems
 
             return position += (velocity) * dt;
         }
-
-        public void OnDelete()
-        {
-            //throw new NotImplementedException();
-        }
     }
 }

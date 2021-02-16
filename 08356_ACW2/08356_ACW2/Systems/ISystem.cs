@@ -10,7 +10,7 @@ namespace OpenGL_Game.Systems
     interface ISystem
     {
         void OnAction(Entity entity, float dt);
-        void OnDelete();
+       
 
         // Property signatures: 
         string Name

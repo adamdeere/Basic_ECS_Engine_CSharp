@@ -8,7 +8,7 @@ namespace OpenGL_Game.Systems
 {
     class SystemBox : ISystem
     {
-        List<Entity> m_EntityList; 
+        private List<Entity> m_EntityList; 
         public SystemBox(List<Entity> list)
         {
             m_EntityList = list;
@@ -116,11 +116,6 @@ namespace OpenGL_Game.Systems
         {
             transform.Position = transform.OldPosition;
             physics.Velocity -= 2 * Vector3.Dot(normal, physics.Velocity) * normal;
-        }
-
-        public void OnDelete()
-        {
-            throw new NotImplementedException();
         }
     }
 }

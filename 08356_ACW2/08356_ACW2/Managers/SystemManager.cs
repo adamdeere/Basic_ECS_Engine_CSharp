@@ -45,12 +45,6 @@ namespace OpenGL_Game.Managers
             }
             );
         }
-        public void DeleteShaders()
-        {
-            foreach (ISystem system in systemList)
-            {
-                system.OnDelete();
-            }
-        }
+       
     }
 }

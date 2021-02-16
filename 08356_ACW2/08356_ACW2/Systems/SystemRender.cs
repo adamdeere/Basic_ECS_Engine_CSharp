@@ -81,10 +81,5 @@ namespace OpenGL_Game.Systems
             GL.BindVertexArray(0);
             GL.UseProgram(0);
         }
-
-        public void OnDelete()
-        {
-           
-        }
     }
 }

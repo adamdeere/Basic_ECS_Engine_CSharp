@@ -65,7 +65,22 @@ namespace OpenGL_Game
                     Vector3 rot = gameData[i].ConvertToVector(gameData[i].Rotation);
 
                     newEntity = new Entity(name);
-                    newEntity.AddComponent(new ComponentTransform(pos, new Vector3(1, 1, 1), rot));
+                    if (name.Contains("SmallSphere"))
+                    {
+                        newEntity.AddComponent(new ComponentTransform(pos, new Vector3(1, 1, 1), rot, .3f));
+                    }
+                    else if (name.Contains("BigSphere"))
+                    {
+                        newEntity.AddComponent(new ComponentTransform(pos, new Vector3(1, 1, 1), rot, .5f));
+                    }
+                    else if (name.Contains("DoomSphere"))
+                    {
+                        newEntity.AddComponent(new ComponentTransform(pos, new Vector3(1, 1, 1), rot, .8f));
+                    }
+                    else
+                    {
+                        newEntity.AddComponent(new ComponentTransform(pos, new Vector3(1, 1, 1), rot, 1));
+                    }
                     newEntity.AddComponent(new ComponentModel(modelManager.FindModel(name)));
                     newEntity.AddComponent(new ComponentMaterial(matManager.FindMaterial(mat)));
 
@@ -109,6 +124,9 @@ namespace OpenGL_Game
             systemManager.AddSystem(newSystem);
 
             newSystem = new SystemBox(entityManager.Entities());
+            systemManager.AddSystem(newSystem);
+
+            newSystem = new SystemDoomSphere(entityManager.Entities());
             systemManager.AddSystem(newSystem);
 
             systemManager.StartTimer();
