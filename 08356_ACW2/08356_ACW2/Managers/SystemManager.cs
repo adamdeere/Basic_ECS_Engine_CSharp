@@ -7,23 +7,29 @@ namespace OpenGL_Game.Managers
     class SystemManager
     {
         List<ISystem> systemList = new List<ISystem>();
-
+        private TimerObject m_Timer;
+      
         public SystemManager()
         {
+            m_Timer = new TimerObject();
         }
 
         public void ActionSystems(EntityManager entityManager)
         {
+            float deltaTime = m_Timer.GetElapsedSeconds();
             List<Entity> entityList = entityManager.Entities();
             foreach(ISystem system in systemList)
             {
-                foreach(Entity entity in entityList)
+                for (int i = 0; i < entityList.Count; i++)
                 {
-                    system.OnAction(entity);
+                    system.OnAction(entityList[i], deltaTime);
                 }
             }
         }
-
+        public void StartTimer()
+        {
+            m_Timer.StartTimer();
+        }
         public void AddSystem(ISystem system)
         {
             ISystem result = FindSystem(system.Name);
@@ -39,12 +45,6 @@ namespace OpenGL_Game.Managers
             }
             );
         }
-        public void DeleteShaders()
-        {
-            foreach (ISystem system in systemList)
-            {
-                system.OnDelete();
-            }
-        }
+       
     }
 }

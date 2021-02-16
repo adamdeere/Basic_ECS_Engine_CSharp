@@ -24,6 +24,8 @@ namespace OpenGL_Game
         private ModelManager modelManager;
         private ShaderManager shaderManager;
         private MaterialManager matManager;
+        private TimerObject mTimer;
+        private float mElaspedTime;
         
         public static MyGame gameInstance;
 
@@ -39,6 +41,7 @@ namespace OpenGL_Game
                 GraphicsContextFlags.ForwardCompatible)
         {
             gameInstance = this;
+            mTimer = new TimerObject();
             entityManager = new EntityManager();
             systemManager = new SystemManager();
             matManager = new MaterialManager("Textures/TextureList.txt");
@@ -65,7 +68,22 @@ namespace OpenGL_Game
                     Vector3 rot = gameData[i].ConvertToVector(gameData[i].Rotation);
 
                     newEntity = new Entity(name);
-                    newEntity.AddComponent(new ComponentTransform(pos, new Vector3(1, 1, 1), rot));
+                    if (name.Contains("SmallSphere"))
+                    {
+                        newEntity.AddComponent(new ComponentTransform(pos, new Vector3(1, 1, 1), rot, .3f));
+                    }
+                    else if (name.Contains("BigSphere"))
+                    {
+                        newEntity.AddComponent(new ComponentTransform(pos, new Vector3(1, 1, 1), rot, .5f));
+                    }
+                    else if (name.Contains("DoomSphere"))
+                    {
+                        newEntity.AddComponent(new ComponentTransform(pos, new Vector3(1, 1, 1), rot, .8f));
+                    }
+                    else
+                    {
+                        newEntity.AddComponent(new ComponentTransform(pos, new Vector3(1, 1, 1), rot, 1));
+                    }
                     newEntity.AddComponent(new ComponentModel(modelManager.FindModel(name)));
                     newEntity.AddComponent(new ComponentMaterial(matManager.FindMaterial(mat)));
 
@@ -81,7 +99,18 @@ namespace OpenGL_Game
                     {
                         if (!name.StartsWith("Doom"))
                         {
-                            newEntity.AddComponent(new ComponentPhysics());
+                            if (name.Contains("SmallSphere"))
+                            {
+                                newEntity.AddComponent(new ComponentPhysics(new Vector3(1, -1, 0), 4.8f, .3f));
+                            }
+                            else if (name.Contains("BigSphere"))
+                            {
+                                newEntity.AddComponent(new ComponentPhysics(new Vector3(1, -1, 0),7.8f, .5f));
+                            }
+                            newEntity.AddComponent(new ComponentPhysicsCollision());
+                            newEntity.AddComponent(new ComponentWorldCollsion());
+                            newEntity.AddComponent(new ComponentCylinderCollsion());
+                            newEntity.AddComponent(new ComponentDoomCollsion());
                         }
                     }
                     if (name.Contains("Tower"))
@@ -93,13 +122,53 @@ namespace OpenGL_Game
                 }
             }
         }
+        private void AddEntity()
+        {
+            Entity newEntity;
+            newEntity = new Entity("SmallSphere");
+            newEntity.AddComponent(new ComponentTransform(new Vector3(-0.6f, 4.0f, 0), new Vector3(1, 1, 1), new Vector3(0,0,0), .3f));
+            newEntity.AddComponent(new ComponentModel(modelManager.FindModel("SmallSphere")));
+            newEntity.AddComponent(new ComponentMaterial(matManager.FindMaterial("pbrShader")));
+            newEntity.AddComponent(new ComponentPhysics(new Vector3(1, -1, 0), 4.8f, .3f));
+            newEntity.AddComponent(new ComponentPhysicsCollision());
+            newEntity.AddComponent(new ComponentWorldCollsion());
+            newEntity.AddComponent(new ComponentCylinderCollsion());
+            newEntity.AddComponent(new ComponentDoomCollsion());
+            entityManager.AddEntity(newEntity);
 
+            newEntity = new Entity("BigSphere");
+            newEntity.AddComponent(new ComponentTransform(new Vector3(0.8f, 4.3f, 0.3f), new Vector3(1, 1, 1), new Vector3(0, 0, 0), .3f));
+            newEntity.AddComponent(new ComponentModel(modelManager.FindModel("BigSphere")));
+            newEntity.AddComponent(new ComponentMaterial(matManager.FindMaterial("pbrShader")));
+            newEntity.AddComponent(new ComponentPhysics(new Vector3(1, -1, 0), 4.8f, .3f));
+            newEntity.AddComponent(new ComponentPhysicsCollision());
+            newEntity.AddComponent(new ComponentWorldCollsion());
+            newEntity.AddComponent(new ComponentCylinderCollsion());
+            newEntity.AddComponent(new ComponentDoomCollsion());
+            entityManager.AddEntity(newEntity);
+
+
+        }
         private void CreateSystems()
         {
             ISystem newSystem;
 
             newSystem = new SystemRender(shaderManager.FindShader("pbrShader"));
             systemManager.AddSystem(newSystem);
+
+            newSystem = new SystemPhysics(entityManager.Entities());
+            systemManager.AddSystem(newSystem);
+
+            newSystem = new SystemBox(entityManager.Entities());
+            systemManager.AddSystem(newSystem);
+
+            newSystem = new SystemDoomSphere(entityManager.Entities());
+            systemManager.AddSystem(newSystem);
+
+            newSystem = new SystemCollsion(entityManager.Entities());
+            systemManager.AddSystem(newSystem);
+
+            systemManager.StartTimer();
         }
         /// <summary>
         /// Allows the game to setup the environment and matrices.
@@ -110,17 +179,14 @@ namespace OpenGL_Game
             GL.Enable(EnableCap.DepthTest);
             GL.ClearColor(Color4.CornflowerBlue);
             GL.Enable(EnableCap.CullFace);
-            //view = Matrix4.LookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
             view = Matrix4.CreateTranslation(0, -1, -12.5f);
             projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 800f / 480f, 0.01f, 100f);
             
             modelManager.BindGeometetry(shaderManager);
             CreateSystems();
-           
             CreateEntities();
-         
-
-            // TODO: Add your initialization logic here
+            mTimer.StartTimer();
+           
         }
         protected override void OnUnload(EventArgs e)
         {
@@ -143,8 +209,13 @@ namespace OpenGL_Game
             base.OnUpdateFrame(e);
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Key.Escape))
                 Exit();
-
-            // TODO: Add your update logic here
+            mElaspedTime += mTimer.GetElapsedSeconds();
+            if (mElaspedTime > 3)
+            {
+                mElaspedTime = 0;
+                AddEntity();
+            }
+           
         }
 
         /// <summary>
