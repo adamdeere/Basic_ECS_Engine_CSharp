@@ -80,7 +80,10 @@ namespace OpenGL_Game.Systems
                         else
                         {
                             spherePhys.Velocity = Vector3.Transform(spherePhys.Velocity, cylinderMatrix.ExtractRotation().Inverted());
+                            Vector3 rad = new Vector3(spherePhys.Radius, spherePhys.Radius, spherePhys.Radius);
                             Vector3 normal = Vector3.Transform((circleInCollsionSpace - redLine).Normalized(), cylinderMatrix.ExtractRotation().Inverted());
+                            //sphere.Position = sphere.OldPosition + rad * normal;
+
                             spherePhys.Velocity -= 2 * Vector3.Dot(normal, spherePhys.Velocity) * normal;
                             spherePhys.Velocity = Vector3.Transform(spherePhys.Velocity, cylinderMatrix.ExtractRotation());
                             float distance = Math.Abs(Vector3.Dot(circleInCollsionSpace, normal));

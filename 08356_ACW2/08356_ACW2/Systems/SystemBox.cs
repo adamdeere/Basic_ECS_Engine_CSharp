@@ -71,7 +71,7 @@ namespace OpenGL_Game.Systems
                     });
                     ComponentPhysics physics = (ComponentPhysics)physicsComponent;
                    
-                   // Vector3 sphereinTowerSpace = Vector3.Transform(transform.Position, modelMatrix.Inverted());
+                    Vector3 sphereinTowerSpace = Vector3.TransformPosition(transform.Position, modelMatrix.Inverted());
                     float mCircleRadius = transform.Scale.X;
 
                     if (transform.Position.Y  < -3.0)
@@ -98,12 +98,12 @@ namespace OpenGL_Game.Systems
                     }
 
 
-                    else if (transform.Position.X < -1.0)
+                    else if (transform.Position.X < -1.2)
                     {
                         Vector3 normal = Vector3.Transform(new Vector3(1, 0, 0), modelMatrix.ExtractRotation());
                         ChangeDirection(physics, transform, normal);
                     }
-                    else if (transform.Position.X > 1.0)
+                    else if (transform.Position.X > 1.2)
                     {
                         Vector3 normal = Vector3.Transform(new Vector3(-1, 0, 0), modelMatrix.ExtractRotation());
                         ChangeDirection(physics, transform, normal);

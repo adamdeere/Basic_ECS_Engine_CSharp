@@ -50,7 +50,7 @@ namespace OpenGL_Game.Systems
 
             Vector3 velocity = physics.Velocity;
 
-            return position += (velocity) * dt;
+            return position += (velocity + m_gravity) * dt;
         }
 
         public void UpdatePhysicsCollsion(Entity self, ComponentTransform selfPosition, ComponentPhysics selfPhysics)
@@ -79,9 +79,11 @@ namespace OpenGL_Game.Systems
 
                     if ((selfPosition.Position - collidedWithPosition.Position).Length < (selfPhysics.Radius + collidedwithPhysics.Radius))
                     {
-                        selfPosition.Position = selfPosition.OldPosition;
+                       
 
                         Vector3 normal = (collidedWithPosition.Position - selfPosition.Position).Normalized();
+                        Vector3 rad = new Vector3(selfPhysics.Radius, selfPhysics.Radius, selfPhysics.Radius);
+                        //selfPosition.Position = selfPosition.OldPosition + rad * normal;
 
                         Vector3 selfVelocityCopy = selfPhysics.Velocity;
                         Vector3 collidedwithVelocityCopy = collidedwithPhysics.Velocity;

@@ -14,8 +14,11 @@ namespace OpenGL_Game.Components
 
         public ComponentPhysics(Vector3 vel, float density, float radius)
         {
+            Random r = new Random();
+            float x = r.Next(-3, 4);
+            float z = r.Next(-3, 3);
             Radius = radius;
-            m_Velocity = vel;
+            m_Velocity = new Vector3(x, 0, z); ;
             Density = density;
             Volume = (4 / 3) * (float)Math.PI * (float)Math.Pow(Radius, 3);
             Mass = density * Volume;
