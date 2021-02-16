@@ -1,0 +1,74 @@
+[
+  {
+    "name": "BigCylinder",
+    "location": "0.0,2.497436761856079,0.0",
+    "rotation": "1.5707963705062866,0.0,0.0",
+    "mat": "pbrShader"
+  },
+  {
+    "name": "BigCylinder",
+    "location": "0.0,1.4117649793624878,0.0",
+    "rotation": "1.5707963705062866,1.5707963705062866,0.0",
+    "mat": "pbrShader"
+  },
+  {
+    "name": "BigSphere",
+    "location": "0.8230723142623901,4.336416244506836,0.30571261048316956",
+    "rotation": "0.0,0.0,0.0",
+    "mat": "pbrShader"
+  },
+  {
+    "name": "DoomSphere",
+    "location": "0.0,-2.139988422393799,0.0",
+    "rotation": "0.0,0.0,0.0",
+    "mat": "pbrShader"
+  },
+  {
+    "name": "Floor",
+    "location": "0.0,-2.982639789581299,0.0",
+    "rotation": "1.5707963705062866,0.0,0.0",
+    "mat": "effectShader"
+  },
+  {
+    "name": "Portal",
+    "location": "-1.515146255493164,4.21118688583374,0.0",
+    "rotation": "0.0,1.5707963705062866,0.0",
+    "mat": "effectShader"
+  },
+  {
+    "name": "SmallCylinder",
+    "location": "0.0,2.504056215286255,0.0",
+    "rotation": "0.0,0.0,1.5707963705062866",
+    "mat": "pbrShader"
+  },
+  {
+    "name": "SmallCylinder",
+    "location": "0.0,1.4202289581298828,0.0",
+    "rotation": "1.5707963705062866,0.0,0.0",
+    "mat": "pbrShader"
+  },
+  {
+    "name": "SmallCylinder",
+    "location": "-0.007243812084197998,-0.10189357399940491,-0.5722252726554871",
+    "rotation": "0.0,0.0,0.7853981852531433",
+    "mat": "pbrShader"
+  },
+  {
+    "name": "SmallCylinder",
+    "location": "0.004306048154830933,-0.4403206408023834,0.7040318250656128",
+    "rotation": "0.0,0.0,-0.7853981852531433",
+    "mat": "pbrShader"
+  },
+  {
+    "name": "SmallSphere",
+    "location": "-0.6848301291465759,4.065280914306641,0.0",
+    "rotation": "0.0,0.0,0.0",
+    "mat": "pbrShader"
+  },
+  {
+    "name": "Tower",
+    "location": "0.0,0.0,0.0",
+    "rotation": "0.0,0.0,0.0",
+    "mat": "pbrShader"
+  }
+]

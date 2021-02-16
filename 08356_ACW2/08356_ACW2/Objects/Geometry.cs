@@ -96,7 +96,9 @@ namespace OpenGL_Game.Objects
             GL.EnableVertexAttribArray(shader.GetBiTanAtt);
             GL.EnableVertexAttribArray(shader.GetVTanAtt);
             GL.BindVertexArray(0);
-          
+
+            vertices.Clear();
+            m_Indices = null;
         }
         public void DeleteGeometry()
         {

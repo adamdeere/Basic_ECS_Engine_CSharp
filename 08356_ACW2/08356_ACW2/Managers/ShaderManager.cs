@@ -38,7 +38,10 @@ namespace OpenGL_Game.Managers
         }
         public void DeleteShaders()
         {
-
+            foreach (var item in m_shaderList)
+            {
+                item.DeleteShader();
+            }
         }
     }
 }
