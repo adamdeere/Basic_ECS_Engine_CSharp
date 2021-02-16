@@ -96,7 +96,14 @@ namespace OpenGL_Game
                     {
                         if (!name.StartsWith("Doom"))
                         {
-                            newEntity.AddComponent(new ComponentPhysics(new Vector3(1,-1,0)));
+                            if (name.Contains("SmallSphere"))
+                            {
+                                newEntity.AddComponent(new ComponentPhysics(new Vector3(1, -1, 0), 4.8f, .3f));
+                            }
+                            else if (name.Contains("BigSphere"))
+                            {
+                                newEntity.AddComponent(new ComponentPhysics(new Vector3(1, -1, 0),7.8f, .5f));
+                            }
                             newEntity.AddComponent(new ComponentPhysicsCollision());
                             newEntity.AddComponent(new ComponentWorldCollsion());
                             newEntity.AddComponent(new ComponentCylinderCollsion());
@@ -127,6 +134,9 @@ namespace OpenGL_Game
             systemManager.AddSystem(newSystem);
 
             newSystem = new SystemDoomSphere(entityManager.Entities());
+            systemManager.AddSystem(newSystem);
+
+            newSystem = new SystemCollsion(entityManager.Entities());
             systemManager.AddSystem(newSystem);
 
             systemManager.StartTimer();

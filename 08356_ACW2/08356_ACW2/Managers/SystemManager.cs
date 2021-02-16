@@ -20,9 +20,9 @@ namespace OpenGL_Game.Managers
             List<Entity> entityList = entityManager.Entities();
             foreach(ISystem system in systemList)
             {
-                foreach(Entity entity in entityList)
+                for (int i = 0; i < entityList.Count; i++)
                 {
-                    system.OnAction(entity, deltaTime);
+                    system.OnAction(entityList[i], deltaTime);
                 }
             }
         }

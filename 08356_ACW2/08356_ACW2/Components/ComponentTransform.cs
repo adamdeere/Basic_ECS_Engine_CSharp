@@ -4,6 +4,7 @@ namespace OpenGL_Game.Components
 {
     class ComponentTransform : IComponent
     {
+        private Matrix4 mModelMatrix;
         private Vector3 m_Position;
         private Vector3 m_Scale;
         private Vector3 m_Rotation;
@@ -16,6 +17,18 @@ namespace OpenGL_Game.Components
             m_Scale = scale;
             m_Rotation = rot;
             m_Radius = radius;
+
+            mModelMatrix = Matrix4.CreateScale(scale.X, scale.Y, scale.Z);
+            mModelMatrix *= Matrix4.CreateRotationX(m_Rotation.X);
+            mModelMatrix *= Matrix4.CreateRotationY(m_Rotation.Y);
+            mModelMatrix *= Matrix4.CreateRotationZ(m_Rotation.Z);
+            mModelMatrix *= Matrix4.CreateTranslation(m_Position.X, m_Position.Y, m_Position.Z);
+        }
+
+        public Matrix4 ModelMatrix
+        {
+            get { return mModelMatrix; }
+            set { mModelMatrix = value; }
         }
 
         public Vector3 Position
