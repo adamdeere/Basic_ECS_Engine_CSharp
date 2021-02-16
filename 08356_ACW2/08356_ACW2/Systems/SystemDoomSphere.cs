@@ -10,7 +10,7 @@ namespace OpenGL_Game.Systems
     {
         public string Name => throw new NotImplementedException();
 
-        public void OnAction(Entity entity)
+        public void OnAction(Entity entity, float dt)
         {
             throw new NotImplementedException();
         }

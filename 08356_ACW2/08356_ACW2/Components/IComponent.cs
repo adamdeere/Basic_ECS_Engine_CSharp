@@ -9,6 +9,7 @@
         COMPONENT_PHYSICS = 1 << 4,
         COMPONENT_COLLSION = 1 << 5,
         COMPONENT_DOOMSPHERE = 1 << 6,
+        COMPONENT_PHYSICSCOLLSION = 1 << 7,
 
     }
 

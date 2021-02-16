@@ -10,11 +10,11 @@ namespace OpenGL_Game.Systems
     {
         const ComponentTypes MASK = (ComponentTypes.COMPONENT_TRANSFORM | ComponentTypes.COMPONENT_MODEL | ComponentTypes.COMPONENT_MATERIAL);
 
-        ShaderObject k;
+        ShaderObject m_PBR_Shader;
 
-        public SystemRender(ShaderObject h)
+        public SystemRender(ShaderObject inShader)
         {
-            k = h;
+            m_PBR_Shader = inShader;
         }
 
 
@@ -23,7 +23,7 @@ namespace OpenGL_Game.Systems
             get { return "SystemRender"; }
         }
 
-        public void OnAction(Entity entity)
+        public void OnAction(Entity entity, float dt)
         {
             if ((entity.Mask & MASK) == MASK)
             {
@@ -68,13 +68,13 @@ namespace OpenGL_Game.Systems
 
         public void Draw(Matrix4 world, Geometry geometry, ComponentMaterial mat)
         {
-            GL.UseProgram(k.GetProgramId);
+            GL.UseProgram(m_PBR_Shader.GetProgramId);
           //  GL.CullFace(CullFaceMode.Front);
-            GL.Uniform1(k.GetUniformStex, 0);
+            GL.Uniform1(m_PBR_Shader.GetUniformStex, 0);
             mat.SetActiveTextues();
 
             Matrix4 worldViewProjection = world * MyGame.gameInstance.view * MyGame.gameInstance.projection;
-            GL.UniformMatrix4(k.GetuniformMView, false, ref worldViewProjection);
+            GL.UniformMatrix4(m_PBR_Shader.GetuniformMView, false, ref worldViewProjection);
 
             geometry.Render();
 

@@ -81,7 +81,8 @@ namespace OpenGL_Game
                     {
                         if (!name.StartsWith("Doom"))
                         {
-                            newEntity.AddComponent(new ComponentPhysics());
+                            newEntity.AddComponent(new ComponentPhysics(new Vector3(1,0,0)));
+                            newEntity.AddComponent(new ComponentPhysicsCollision());
                         }
                     }
                     if (name.Contains("Tower"))
@@ -100,6 +101,12 @@ namespace OpenGL_Game
 
             newSystem = new SystemRender(shaderManager.FindShader("pbrShader"));
             systemManager.AddSystem(newSystem);
+
+            newSystem = new SystemPhysics();
+            systemManager.AddSystem(newSystem);
+
+
+            systemManager.StartTimer();
         }
         /// <summary>
         /// Allows the game to setup the environment and matrices.
@@ -116,7 +123,6 @@ namespace OpenGL_Game
             
             modelManager.BindGeometetry(shaderManager);
             CreateSystems();
-           
             CreateEntities();
          
 

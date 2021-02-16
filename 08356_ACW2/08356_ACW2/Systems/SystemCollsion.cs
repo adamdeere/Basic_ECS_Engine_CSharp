@@ -1,8 +1,5 @@
 ﻿using OpenGL_Game.Objects;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OpenGL_Game.Systems
 {
@@ -10,7 +7,7 @@ namespace OpenGL_Game.Systems
     {
         public string Name => "system collsion";
 
-        public void OnAction(Entity entity)
+        public void OnAction(Entity entity, float dt)
         {
             throw new NotImplementedException();
         }
