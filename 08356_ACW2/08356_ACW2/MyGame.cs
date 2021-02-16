@@ -127,7 +127,7 @@ namespace OpenGL_Game
             newSystem = new SystemRender(shaderManager.FindShader("pbrShader"));
             systemManager.AddSystem(newSystem);
 
-            newSystem = new SystemPhysics();
+            newSystem = new SystemPhysics(entityManager.Entities());
             systemManager.AddSystem(newSystem);
 
             newSystem = new SystemBox(entityManager.Entities());

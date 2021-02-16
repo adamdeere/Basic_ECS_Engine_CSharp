@@ -6,7 +6,7 @@ namespace OpenGL_Game.Components
     class ComponentPhysics : IComponent
     {
         private Vector3 m_Velocity;
-        private readonly float coeeficent;
+        private  float coeeficent;
         public float Radius { get; set; }
         public float Volume { get; set; }
         public float Density { get; set; }
@@ -23,6 +23,7 @@ namespace OpenGL_Game.Components
         }
 
         public Vector3 Velocity { get => m_Velocity; set => m_Velocity = value; }
+        public float CoEfficent { get => coeeficent; }
 
         public void ResizeBall()
         {
