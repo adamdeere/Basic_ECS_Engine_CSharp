@@ -58,12 +58,15 @@
   <ItemGroup>
     <Compile Include="Components\ComponentBoxCollison.cs" />
     <Compile Include="Components\ComponentCollsion.cs" />
+    <Compile Include="Components\ComponentCylinderCollsion.cs" />
+    <Compile Include="Components\ComponentDoomCollsion.cs" />
     <Compile Include="Components\ComponentDoomSphere.cs" />
     <Compile Include="Components\ComponentModel.cs" />
     <Compile Include="Components\ComponentMaterial.cs" />
     <Compile Include="Components\ComponentPhysics.cs" />
     <Compile Include="Components\ComponentPhysicsCollision.cs" />
     <Compile Include="Components\ComponentTransform.cs" />
+    <Compile Include="Components\ComponentWorldCollsion.cs" />
     <Compile Include="Managers\MaterialManager.cs" />
     <Compile Include="Managers\ModelManager.cs" />
     <Compile Include="Managers\SceneManager.cs" />

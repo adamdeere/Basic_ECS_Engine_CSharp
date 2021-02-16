@@ -48,7 +48,7 @@ namespace OpenGL_Game.Systems
 
             Vector3 velocity = physics.Velocity;
 
-            return position += (velocity + m_gravity) * dt;
+            return position += (velocity) * dt;
         }
 
         public void OnDelete()

@@ -81,8 +81,11 @@ namespace OpenGL_Game
                     {
                         if (!name.StartsWith("Doom"))
                         {
-                            newEntity.AddComponent(new ComponentPhysics(new Vector3(1,0,0)));
+                            newEntity.AddComponent(new ComponentPhysics(new Vector3(1,-1,0)));
                             newEntity.AddComponent(new ComponentPhysicsCollision());
+                            newEntity.AddComponent(new ComponentWorldCollsion());
+                            newEntity.AddComponent(new ComponentCylinderCollsion());
+                            newEntity.AddComponent(new ComponentDoomCollsion());
                         }
                     }
                     if (name.Contains("Tower"))
@@ -105,6 +108,8 @@ namespace OpenGL_Game
             newSystem = new SystemPhysics();
             systemManager.AddSystem(newSystem);
 
+            newSystem = new SystemBox(entityManager.Entities());
+            systemManager.AddSystem(newSystem);
 
             systemManager.StartTimer();
         }

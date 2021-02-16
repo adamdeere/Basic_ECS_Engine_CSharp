@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using OpenGL_Game.Components;
 
@@ -27,7 +24,7 @@ namespace OpenGL_Game.Objects
             mask |= component.ComponentType;
         }
 
-        public String Name
+        public string Name
         {
             get { return name; }
         }
