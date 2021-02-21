@@ -34,9 +34,9 @@ void main()
     vec3 B = normalize(vec3(uModel * vec4(a_BiTan, 0.0)));
     vec3 N = normalize(vec3(uModel * vec4(a_Normal, 0.0)));
 
-    vs_out.TBN_Matrix = mat3(T, B, N);
+    vs_out.TBN_Matrix = inverse(transpose(mat3(T,B,N)));
 
-     vs_out.ViewDirection *= vs_out.TBN_Matrix;
+    vs_out.ViewDirection *= vs_out.TBN_Matrix;
     vs_out.LightDirection *= vs_out.TBN_Matrix;
 
     vs_out.ViewDirection = normalize(uEyePosition.xyz - oSurfacePosition.xyz);

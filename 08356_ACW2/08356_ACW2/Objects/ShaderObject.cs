@@ -23,6 +23,7 @@ namespace OpenGL_Game.Objects
         private int uniform_heightTexture;
         private int uniform_metalicTexture;
         private int uniform_roughnessTexture;
+        private int uniform_AO_Texture;
         private int uniform_MVP_Matrix;
         private int uniform_ViewMatrix;
         private int uniform_ModelMatrix;
@@ -61,6 +62,7 @@ namespace OpenGL_Game.Objects
             uniform_heightTexture = GL.GetUniformLocation(pgmID, "s_HeightTexture");
             uniform_metalicTexture = GL.GetUniformLocation(pgmID, "s_MetalicTexture");
             uniform_roughnessTexture = GL.GetUniformLocation(pgmID, "s_RoughnessTexture");
+            uniform_AO_Texture = GL.GetUniformLocation(pgmID, "s_AOTexture");
 
             uniform_ViewMatrix = GL.GetUniformLocation(pgmID, "uView");
             uniform_ModelMatrix = GL.GetUniformLocation(pgmID, "uModel");
@@ -127,6 +129,8 @@ namespace OpenGL_Game.Objects
         public int GetUniformHeightTex => uniform_heightTexture;
         public int GetUniformMetalicTex => uniform_metalicTexture;
         public int GetUniformRoughnessTex => uniform_roughnessTexture;
+
+        public int GetUniformAOTex => uniform_AO_Texture;
 
 
         public int GetuniforMVP_Matrix => uniform_MVP_Matrix;

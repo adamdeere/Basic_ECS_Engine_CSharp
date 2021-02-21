@@ -4,5 +4,5 @@ SmallSphere,SmallSphere.fbx,pbrShader
 BigSphere,BigSphere.fbx,pbrShader
 Tower,Tower.fbx,pbrShader
 DoomSphere,DoomSphere.fbx,pbrShader
-Floor,Floor_Quad.fbx,effectShader
-Portal,Portal_Quad.fbx,effectShader
+Floor,Floor_Quad.fbx,pbrShader
+Portal,Portal_Quad.fbx,pbrShader

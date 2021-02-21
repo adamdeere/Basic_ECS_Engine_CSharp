@@ -19,7 +19,7 @@ namespace OpenGL_Game
     public class MyGame : GameWindow
     {
         public Matrix4 view, projection;
-        public Vector4 lightPosition = new Vector4(5, 1, 1, 0);
+        public Vector4 lightPosition = new Vector4(10, 1, 1, 0);
         private EntityManager entityManager;
         private SystemManager systemManager;
         private ModelManager modelManager;
@@ -180,8 +180,8 @@ namespace OpenGL_Game
             GL.Enable(EnableCap.DepthTest);
             GL.ClearColor(Color4.CornflowerBlue);
             GL.Enable(EnableCap.CullFace);
-            view = Matrix4.CreateTranslation(1, -1, -12.5f);
-           // Vector4.Transform(lightPosition, view);
+            view = Matrix4.CreateTranslation(1, -1, -6);
+            Vector4.Transform(lightPosition, view);
             projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 800f / 480f, 0.01f, 100f);
             
             modelManager.BindGeometetry(shaderManager);

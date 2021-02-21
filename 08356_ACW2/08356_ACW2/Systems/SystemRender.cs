@@ -69,12 +69,13 @@ namespace OpenGL_Game.Systems
         public void Draw(Matrix4 model, Geometry geometry, ComponentMaterial mat)
         {
             GL.UseProgram(m_PBR_Shader.GetProgramId);
-         
+
             GL.Uniform1(m_PBR_Shader.GetUniformColourTex, 0);
             GL.Uniform1(m_PBR_Shader.GetUniformHeightTex, 1);
             GL.Uniform1(m_PBR_Shader.GetUniformMetalicTex, 2);
             GL.Uniform1(m_PBR_Shader.GetUniformNormalTex, 3);
             GL.Uniform1(m_PBR_Shader.GetUniformRoughnessTex, 4);
+            GL.Uniform1(m_PBR_Shader.GetUniformAOTex, 5);
 
             mat.SetActiveTextues();
 

@@ -3,4 +3,10 @@ pbrShader,Scene_Height.png,3
 pbrShader,Scene_Metalic.png,4
 pbrShader,Scene_Normal.png,2
 pbrShader,Scene_Roughness.png,5
-effectShader,test_Colour.png,1 
+pbrShader,Scene_AO.png,6
+floorShader,Floor_Color.png,1
+floorShader,Floor_Height.png,3
+floorShader,Floor_Metallic.png,4
+floorShader,Floor_Normal.png,2
+floorShader,Floor_Roughness.png,5
+floorShader,Floor_AO.png,6

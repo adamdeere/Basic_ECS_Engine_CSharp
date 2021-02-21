@@ -67,7 +67,7 @@ namespace OpenGL_Game.Managers
                     return item;
                 }
             }
-            throw new Exception("Failed to compile shader!");
+            throw new Exception("Failed to find matrieal!");
         }
 
         public void DeleteTextures()
