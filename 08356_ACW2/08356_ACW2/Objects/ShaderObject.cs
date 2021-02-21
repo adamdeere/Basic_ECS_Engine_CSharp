@@ -47,7 +47,7 @@ namespace OpenGL_Game.Objects
             attribute_vtex = GL.GetAttribLocation(pgmID, "a_TexCoord");
 
             attribute_vNorm = GL.GetAttribLocation(pgmID, "a_Normal");
-            attribute_vBiTan = GL.GetAttribLocation(pgmID, "a_biTan");
+            attribute_vBiTan = GL.GetAttribLocation(pgmID, "a_BiTan");
             attribute_vTan = GL.GetAttribLocation(pgmID, "a_Tan");
 
 
