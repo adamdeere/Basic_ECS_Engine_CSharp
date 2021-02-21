@@ -180,7 +180,7 @@ namespace OpenGL_Game
             GL.Enable(EnableCap.DepthTest);
             GL.ClearColor(Color4.CornflowerBlue);
             GL.Enable(EnableCap.CullFace);
-            view = Matrix4.CreateTranslation(0, -1, -12.5f);
+            view = Matrix4.CreateTranslation(1, -1, -12.5f);
            // Vector4.Transform(lightPosition, view);
             projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 800f / 480f, 0.01f, 100f);
             

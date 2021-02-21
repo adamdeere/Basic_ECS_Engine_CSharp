@@ -10,13 +10,16 @@ uniform mat4 WorldViewProj;
 uniform mat4 uModel;
 uniform mat4 uView;
 uniform mat4 uProjecttion;
+uniform vec4 uLightPosition;
+uniform vec4 uEyePosition;
 
 out VS_OUT
 {
-  vec4 oSurfacePosition;
+ 
   mat3 TBN_Matrix;
   vec2 v_TexCoord;
-  vec4 v_Normal;
+  vec3 ViewDirection;
+  vec3 LightDirection;
  
 } vs_out;
 
@@ -24,7 +27,8 @@ void main()
 {
     gl_Position = WorldViewProj * vec4(a_Position, 1.0);
     vs_out.v_TexCoord = a_TexCoord;
-    vs_out.oSurfacePosition = vec4(a_Position, 1) * uModel * uView;
+
+    vec4 oSurfacePosition = vec4(a_Position, 1) * uModel * uView;
 
     vec3 T = normalize(vec3(uModel * vec4(a_Tan,   0.0)));
     vec3 B = normalize(vec3(uModel * vec4(a_BiTan, 0.0)));
@@ -32,6 +36,10 @@ void main()
 
     vs_out.TBN_Matrix = mat3(T, B, N);
 
-    //vs_out.v_Normal = vec4(normalize(a_Normal * mat3(transpose(inverse(uModel * uView)))), 1);  
+     vs_out.ViewDirection *= vs_out.TBN_Matrix;
+    vs_out.LightDirection *= vs_out.TBN_Matrix;
+
+    vs_out.ViewDirection = normalize(uEyePosition.xyz - oSurfacePosition.xyz);
+    vs_out.LightDirection = normalize(uLightPosition.xyz - oSurfacePosition.xyz);
     
 }
