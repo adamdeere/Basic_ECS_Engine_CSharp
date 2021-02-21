@@ -18,8 +18,21 @@ namespace OpenGL_Game.Objects
         private int attribute_vBiTan;
         private int attribute_vTan;
 
-        protected int uniform_stex;
-        protected int uniform_mview;
+        private int uniform_albeidoTexture;
+        private int uniform_normalTexture;
+        private int uniform_heightTexture;
+        private int uniform_metalicTexture;
+        private int uniform_roughnessTexture;
+        private int uniform_MVP_Matrix;
+        private int uniform_ViewMatrix;
+        private int uniform_ModelMatrix;
+        private int uniform_ProjectionMatrix;
+
+        private int attribute_Eyepostion;
+        private int attribute_LightPosition;
+
+
+
         public ShaderObject(string tag, string vs, string fs)
         {
             m_Tag = tag;
@@ -38,15 +51,37 @@ namespace OpenGL_Game.Objects
             attribute_vTan = GL.GetAttribLocation(pgmID, "a_Tan");
 
 
-            uniform_mview = GL.GetUniformLocation(pgmID, "WorldViewProj");
+            attribute_Eyepostion = GL.GetUniformLocation(pgmID, "uEyePosition");
+            attribute_LightPosition = GL.GetUniformLocation(pgmID, "uLightPosition");
 
-            uniform_stex = GL.GetUniformLocation(pgmID, "s_texture");
+            uniform_MVP_Matrix = GL.GetUniformLocation(pgmID, "WorldViewProj");
 
-            if (attribute_vpos == -1 || attribute_vtex == -1 || uniform_stex == -1 || uniform_mview == -1)
+            uniform_albeidoTexture = GL.GetUniformLocation(pgmID, "s_texture");
+            uniform_normalTexture = GL.GetUniformLocation(pgmID, "s_NormalTexture");
+            uniform_heightTexture = GL.GetUniformLocation(pgmID, "s_HeightTexture");
+            uniform_metalicTexture = GL.GetUniformLocation(pgmID, "s_MetalicTexture");
+            uniform_roughnessTexture = GL.GetUniformLocation(pgmID, "s_RoughnessTexture");
+
+            uniform_ViewMatrix = GL.GetUniformLocation(pgmID, "uView");
+            uniform_ModelMatrix = GL.GetUniformLocation(pgmID, "uModel");
+            uniform_ProjectionMatrix = GL.GetUniformLocation(pgmID, "uProjecttion"); ;
+
+
+            if (attribute_Eyepostion == -1 || attribute_LightPosition == -1)
+            {
+                Console.WriteLine("Error binding attributes");
+            }
+
+            if (attribute_vpos == -1 || attribute_vtex == -1 || uniform_albeidoTexture == -1 || uniform_MVP_Matrix == -1)
             {
                 Console.WriteLine("Error binding attributes");
             }
             if (attribute_vNorm == -1 || attribute_vBiTan == -1 || attribute_vTan == -1)
+            {
+                Console.WriteLine("Error binding attributes");
+            }
+
+            if (uniform_ViewMatrix == -1 || uniform_ModelMatrix == -1 || uniform_ProjectionMatrix == -1)
             {
                 Console.WriteLine("Error binding attributes");
             }
@@ -87,7 +122,23 @@ namespace OpenGL_Game.Objects
         public int GetBiTanAtt => attribute_vBiTan;
         public int GetVTanAtt => attribute_vTan;
 
-        public int GetUniformStex => uniform_stex;
-        public int GetuniformMView => uniform_mview;
+        public int GetUniformColourTex => uniform_albeidoTexture;
+        public int GetUniformNormalTex => uniform_normalTexture;
+        public int GetUniformHeightTex => uniform_heightTexture;
+        public int GetUniformMetalicTex => uniform_metalicTexture;
+        public int GetUniformRoughnessTex => uniform_roughnessTexture;
+
+
+        public int GetuniforMVP_Matrix => uniform_MVP_Matrix;
+
+        public int Get_uniform_ViewMatrix => uniform_ViewMatrix;
+        public int Get_uniform_ModelMatrix => uniform_ModelMatrix;
+        
+        public int Get_uniform_ProjectionMatrix => uniform_ProjectionMatrix;
+
+        public int Get_EyePosition => attribute_Eyepostion;
+
+        public int Get_Lightposiytion => attribute_LightPosition;
+
     }
 }

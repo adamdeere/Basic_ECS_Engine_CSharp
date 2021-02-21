@@ -66,15 +66,31 @@ namespace OpenGL_Game.Systems
             }
         }
 
-        public void Draw(Matrix4 world, Geometry geometry, ComponentMaterial mat)
+        public void Draw(Matrix4 model, Geometry geometry, ComponentMaterial mat)
         {
             GL.UseProgram(m_PBR_Shader.GetProgramId);
-          //  GL.CullFace(CullFaceMode.Front);
-            GL.Uniform1(m_PBR_Shader.GetUniformStex, 0);
+         
+            GL.Uniform1(m_PBR_Shader.GetUniformColourTex, 0);
+            GL.Uniform1(m_PBR_Shader.GetUniformHeightTex, 1);
+            GL.Uniform1(m_PBR_Shader.GetUniformMetalicTex, 2);
+            GL.Uniform1(m_PBR_Shader.GetUniformNormalTex, 3);
+            GL.Uniform1(m_PBR_Shader.GetUniformRoughnessTex, 4);
+
             mat.SetActiveTextues();
 
-            Matrix4 worldViewProjection = world * MyGame.gameInstance.view * MyGame.gameInstance.projection;
-            GL.UniformMatrix4(m_PBR_Shader.GetuniformMView, false, ref worldViewProjection);
+            Matrix4 worldViewProjection = model * MyGame.gameInstance.view * MyGame.gameInstance.projection;
+
+            Vector3 eyePos = MyGame.gameInstance.view.ExtractTranslation();
+            Vector4 h = new Vector4(eyePos.X, eyePos.Y, eyePos.Z, 1);
+
+
+            GL.Uniform4(m_PBR_Shader.Get_EyePosition, h);
+            GL.Uniform4(m_PBR_Shader.Get_Lightposiytion, MyGame.gameInstance.lightPosition);
+
+            GL.UniformMatrix4(m_PBR_Shader.GetuniforMVP_Matrix, false, ref worldViewProjection);
+            GL.UniformMatrix4(m_PBR_Shader.Get_uniform_ModelMatrix, false, ref model);
+            GL.UniformMatrix4(m_PBR_Shader.Get_uniform_ViewMatrix, false, ref MyGame.gameInstance.view);
+            GL.UniformMatrix4(m_PBR_Shader.Get_uniform_ProjectionMatrix, false, ref MyGame.gameInstance.projection);
 
             geometry.Render();
 

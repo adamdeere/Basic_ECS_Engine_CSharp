@@ -18,8 +18,12 @@ namespace OpenGL_Game.Components
         public void SetActiveTextues()
         {
             List<TextureObject> texList = m_ObjectMat.GetTextureList;
-            GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2D, texList[0].GetTextureNumber);
+            for (int i = 0; i < texList.Count; i++)
+            {
+                TextureUnit unit = TextureUnit.Texture0 + i;
+                GL.ActiveTexture(unit);
+                GL.BindTexture(TextureTarget.Texture2D, texList[i].GetTextureNumber);
+            }
             
             GL.Enable(EnableCap.Texture2D);
         }
