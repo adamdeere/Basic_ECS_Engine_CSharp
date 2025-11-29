@@ -1,7 +1,11 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using Assimp;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
+using Pacman_Remaster.Managers;
+using GL = OpenTK.Graphics.OpenGL.GL;
 
 namespace Pacman_Remaster;
 
@@ -78,17 +82,27 @@ public class Game : GameWindow
         GL.EnableVertexAttribArray(0);
     }
 
+    /// <summary>
+    /// Allows the game to run logic such as updating the world,
+    /// checking for collisions, gathering input, and playing audio.
+    /// </summary>
+    /// <param name="e">Provides a snapshot of timing values.</param>
+    protected override void OnUpdateFrame(FrameEventArgs e)
+    {
+        base.OnUpdateFrame(e);
+        if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Key.Escape))
+            Exit();
+    }
 
     protected override void OnRenderFrame(FrameEventArgs args)
     {
         base.OnRenderFrame(args);
 
-        GL.Clear(ClearBufferMask.ColorBufferBit);
+        GL.Viewport(0, 0, Width, Height);
+        GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-        GL.UseProgram(_shader);
-        GL.BindVertexArray(_vao);
-        GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
-
+       
+        GL.Flush();
         SwapBuffers();
     }
 }

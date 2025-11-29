@@ -4,7 +4,7 @@ using System.Linq;
 using OpenTK.Graphics.OpenGL;
 using Assimp;
 using PrimitiveType = OpenTK.Graphics.OpenGL.PrimitiveType;
-using OpenGL_Game.Managers;
+
 
 //using Assimp;
 

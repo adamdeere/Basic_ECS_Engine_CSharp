@@ -1,9 +1,4 @@
 ﻿using Pacman_Remaster.Objects;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Pacman_Remaster.Managers
 {
@@ -19,7 +14,7 @@ namespace Pacman_Remaster.Managers
                 {
 
                     string line = textureSR.ReadLine();
-                    string[] result = line.Split(new string[] { "\n", "\r\n", "," }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] result = line.Split(["\n", "\r\n", ","], StringSplitOptions.RemoveEmptyEntries);
                     m_shaderList.Add(new ShaderObject(result[0], result[1], result[2]));
 
                 }

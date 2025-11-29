@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
-using Pacman_Remaster.Objects;
+﻿using Pacman_Remaster.Objects;
 
 namespace Pacman_Remaster.Managers
 {
