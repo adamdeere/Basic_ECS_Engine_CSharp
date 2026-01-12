@@ -1,11 +1,11 @@
 ﻿using Assimp;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using Pacman_Remaster.Managers;
 using GL = OpenTK.Graphics.OpenGL.GL;
+using ShaderType = OpenTK.Graphics.OpenGL.ShaderType;
 
 namespace Pacman_Remaster;
 
@@ -18,6 +18,7 @@ public class Game : GameWindow
                              Title = "OpenTK Starter",
                          })
     {
+      
     }
 
     int _vao;
