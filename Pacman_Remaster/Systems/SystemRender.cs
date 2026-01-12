@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
 using Pacman_Remaster.Components;
 using Pacman_Remaster.Objects;
 

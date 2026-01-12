@@ -3,6 +3,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using Pacman_Remaster.Managers;
 using GL = OpenTK.Graphics.OpenGL.GL;
 using ShaderType = OpenTK.Graphics.OpenGL.ShaderType;
@@ -91,15 +92,20 @@ public class Game : GameWindow
     protected override void OnUpdateFrame(FrameEventArgs e)
     {
         base.OnUpdateFrame(e);
-        if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Key.Escape))
-            Exit();
+
+        var keyboard = KeyboardState; // snapshot of current keyboard state
+
+        if (keyboard.IsKeyDown(Keys.Escape))
+        {
+            Close(); // gracefully exit the window/game
+        }
     }
 
     protected override void OnRenderFrame(FrameEventArgs args)
     {
         base.OnRenderFrame(args);
 
-        GL.Viewport(0, 0, Width, Height);
+        GL.Viewport(0, 0, 1280, 720);
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
        
